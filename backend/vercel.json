@@ -13,5 +13,11 @@
             // Specify the paths' destination
             "dest": "app.js"
         }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/api"
+        }
     ]
 }
