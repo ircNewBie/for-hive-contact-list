@@ -2,10 +2,10 @@
   "name": "contact-list-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
