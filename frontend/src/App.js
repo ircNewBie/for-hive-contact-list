@@ -1,11 +1,16 @@
-import RegistrationForm from "./Components/signup";
+import React from "react";
+import AppLayout from "./Components/layout";
 
-function App() {
-  return (
-    <div>
-      <RegistrationForm />
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <div className="App">
+      <AppLayout />
     </div>
-  );
-}
+  </QueryClientProvider>
+);
 
 export default App;
