@@ -3,6 +3,16 @@ const app = express();
 const db = require("./db/db-connect");
 const PORT = 5000;
 
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 // Middleware
 app.use(express.json());
 
