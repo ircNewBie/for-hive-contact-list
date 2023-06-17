@@ -6,12 +6,17 @@ import { ContentComponent } from "./ContentComponent";
 import { useQuery } from "react-query";
 import axios from "axios";
 
+import { API_URL_LOCAL, API_URL_STAGING } from "../constants/apiConfig";
+
 const { Footer, Header } = Layout;
+const isProduction = process.env.NODE_ENV === "production";
+const BASE_URL = isProduction ? API_URL_STAGING : API_URL_LOCAL;
+
 const HeaderComponent = () => {
   const { data, isError } = useQuery("testData", fetchData);
 
   async function fetchData() {
-    const response = await axios.get("http://localhost:5000/");
+    const response = await axios.get(BASE_URL + "/");
     return response.data;
   }
 
