@@ -1,10 +1,10 @@
 import React from "react";
+import { useQuery } from "react-query";
+import axios from "axios";
+
 import { Layout } from "antd";
 import { Sidebar } from "./Sidebar";
 import { ContentComponent } from "./ContentComponent";
-
-import { useQuery } from "react-query";
-import axios from "axios";
 
 import { API_URL_LOCAL, API_URL_STAGING } from "../constants/apiConfig";
 
