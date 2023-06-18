@@ -4,7 +4,6 @@ const db = require("./src/db/db-connect");
 const PORT = 5000;
 
 const cors = require("cors");
-
 const corsOptions = {
   origin: "*",
   credentials: true,
@@ -12,11 +11,13 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// Middleware
 app.use(express.json());
 
-// Routes
+// Routes ----------------------------------------
+const userRouter = require("./src/routes/user.route");
+app.use("/api/user", userRouter);
+
+// Test route ----------------------------------------
 app.get("/", (req, res) => {
   res.send("myContactList App v. 0.1");
 });
