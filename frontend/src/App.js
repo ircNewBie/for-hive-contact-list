@@ -1,5 +1,5 @@
 import React from "react";
-import AppLayout from "./Components/layout";
+import AppLayout from "./Components/Layout";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
