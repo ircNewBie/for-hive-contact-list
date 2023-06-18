@@ -15,7 +15,11 @@ const connectToDatabase = async () => {
     });
 
     console.log("Connected to MongoDB successfully!");
-    console.log("Connected at: ", MONGO_CONN_STRING);
+    console.log(
+      `Backend database is running at:  ${
+        process.env.MONGODB_URI_STAGING ? "Cloud (MongoDB Atlas)" : "Localhost"
+      }`
+    );
     return mongooseInstance;
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);

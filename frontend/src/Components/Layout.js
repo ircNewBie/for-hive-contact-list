@@ -43,7 +43,16 @@ const FooterComponent = () => {
       style={{
         textAlign: "center",
       }}>
-      My ContactList App ©2023 Created by Ant UED
+      <p>
+        My ContactList App ©2023 Created with AntDesign by{" "}
+        <a
+          href="https://github.com/ircNewBie"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ fontWeight: "bold", color: "blue" }}>
+          working0nL1ne
+        </a>
+      </p>
     </Footer>
   );
 };
