@@ -8,9 +8,6 @@ class UserService {
 
   async createUser(req, res) {
     const userData = req.body;
-    const mongooseInstance = req.app.get("mongooseInstance");
-
-    // console.log("userData", userData);
 
     try {
       const salt = await bcrypt.genSalt(10);
@@ -18,6 +15,17 @@ class UserService {
       userData.password = await bcrypt.hash(userData.password, salt);
 
       const result = await this.userRepository.createUser(userData);
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
+  async getAllUsers() {
+    try {
+      const result = await this.userRepository.findAndGetAllUsers();
+
       return result;
     } catch (err) {
       console.log(err);

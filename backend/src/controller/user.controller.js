@@ -16,6 +16,17 @@ class UserController {
       .status(201)
       .json({ message: "User signup  successful!", data: result });
   }
+
+  async getAllUsers(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const userService = new UserService(new UserRepository(mongooseInstance));
+    const result = await userService.getAllUsers();
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(201).json({ message: "Success", data: result });
+  }
 }
 
 module.exports = UserController;

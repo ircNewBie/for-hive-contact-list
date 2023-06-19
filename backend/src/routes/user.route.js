@@ -37,15 +37,14 @@ router.post("/signup", validateSignup, async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-
-  if (!user) {
-    console.log("Invalid / incorrect Email address");
-    return res.status(401).json({ message: "Invalid Credentials" });
-  }
-
+router.post("/login", async (req, res, next) => {
   try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      console.log("Invalid / incorrect Email address");
+      return res.status(401).json({ message: "Invalid Credentials" });
+    }
     const match = await bcrypt.compare(req.body.password, user.password);
 
     const accessToken = jwt.sign(
@@ -61,15 +60,20 @@ router.post("/login", async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    return res
-      .status(400)
-      .json({ message: "Unexpected Error!. Failed to login" });
+    next(error);
   }
 });
 
-router.get("/:id", auth, (req, res) => {
-  const userId = req.params.id;
-  res.send(`API: Get user with ID ${userId}`);
+router.get("/all", auth, async (req, res, next) => {
+  const userController = new UserController();
+
+  try {
+    const result = await userController.getAllUsers(req, res);
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
 });
 
 module.exports = router;
