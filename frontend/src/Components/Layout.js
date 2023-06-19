@@ -1,7 +1,10 @@
-import React from "react";
-import { Layout } from "antd";
+import React, { useState } from "react";
+
+import { Layout, Button } from "antd";
 import { Sidebar } from "./Sidebar";
 import { ContentComponent } from "./ContentComponent";
+import Login from "./Pages/login";
+import RegistrationPage from "./Pages/signup";
 
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -58,15 +61,60 @@ const FooterComponent = () => {
 };
 
 const AppLayout = () => {
+  const [loggedIn, setLoggedIn] = useState(false); // State to track login status
+  const [showRegistration, setShowRegistration] = useState(false);
+
+  const handleLogin = () => {
+    // Simulated login logic
+    // Replace this with your actual login logic
+    // For demonstration purposes, set the loggedIn state to true
+    setLoggedIn(true);
+  };
+
+  function showLoginPage() {
+    const handleRegisterClick = () => {
+      setShowRegistration(true);
+    };
+
+    return (
+      <div style={{ background: "#fff", padding: 24, minHeight: 280 }}>
+        {!showRegistration ? (
+          <>
+            <Login onLogin={handleLogin} />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}>
+              <p>Don't have an account?</p>
+              <Button type="primary" onClick={handleRegisterClick}>
+                Register
+              </Button>
+            </div>
+          </>
+        ) : (
+          <RegistrationPage />
+        )}
+      </div>
+    );
+  }
+
   return (
     <Layout className="site-layout" style={{ minHeight: "100vh" }}>
       <HeaderComponent />
       <Layout style={{ minHeight: "100%" }}>
-        <Sidebar />
-        <Layout style={{ minHeight: "100%" }}>
-          <ContentComponent />
-          <FooterComponent />
-        </Layout>
+        {!loggedIn ? (
+          showLoginPage()
+        ) : (
+          <>
+            <Sidebar />
+            <Layout style={{ minHeight: "100%" }}>
+              <ContentComponent />
+              <FooterComponent />
+            </Layout>
+          </>
+        )}
       </Layout>
     </Layout>
   );
