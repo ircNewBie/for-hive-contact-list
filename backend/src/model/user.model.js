@@ -6,12 +6,14 @@ const userSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   contactNumber: { type: String },
   completeAddress: { type: String },
-
   role: {
     type: String,
     enum: ["ROOT", "ADMIN", "SUPERVISOR", "USER"],
     default: "USER",
   },
+  contacts: [{ type: String }],
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  pendingFriends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 // Create the User model from the User schema
