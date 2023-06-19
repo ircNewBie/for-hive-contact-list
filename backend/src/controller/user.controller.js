@@ -1,10 +1,13 @@
 const Exception = require("../utils/error.handler");
+const UserService = require("../service/user.service");
+const UserRepository = require("../repository/user.repository");
 
 class UserController {
-  async createUser(req, res) {
-    // const userService = new UserService(new UserRepository(mongooseInstance));
+  async signup(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const userService = new UserService(new UserRepository(mongooseInstance));
 
-    // const result = await userService.createUser(req, res);
+    const result = await userService.createUser(req, res);
 
     if (result instanceof Exception) {
       return res.status(result.code).json({ message: result.message });
