@@ -1,16 +1,41 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
+const User = require("../../src/model/user.model");
 
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const expect = chai.expect;
+chai.use(chaiHttp);
 
 const API_SERVER = require("../test.constants");
 
-chai.use(chaiHttp);
-
 describe("Integration test for user", () => {
-  process.env.NODE_ENV = "test";
-  // @TODO - create a fixture to use separatte database when node env = test
+  // @TODO: for improvement - create a fixture to use separate database when NODE_ENV = 'test'
+  // process.env.NODE_ENV = "test";
+
+  const signupURI = "/api/user/signup";
+  const userPayload = {
+    email: "testuser@admin.com",
+    password: "admin",
+    confirm_password: "admin",
+    fullName: "Root Admin",
+    contactNumber: "099999999",
+    completeAddress: "test address",
+  };
+
+  before(async () => {
+    // connect to database
+    const MONGO_CONN_STRING = process.env.MONGODB_URI + process.env.MONGODB_DB;
+
+    await mongoose.connect(MONGO_CONN_STRING, {
+      useNewUrlParser: true,
+    });
+  });
+
+  after(async () => {
+    await Promise.allSettled([User.deleteMany({})]);
+    mongoose.disconnect();
+  });
 
   describe("GET /api/user/test", () => {
     const routerURI = "/api/user/test";
@@ -28,15 +53,9 @@ describe("Integration test for user", () => {
   });
 
   describe("Testing 'POST /api/user/signup' route", () => {
-    const signupURI = "/api/user/signup";
-    const userPayload = {
-      email: "testuser@admin.com",
-      password: "admin",
-      confirm_password: "admin",
-      fullName: "Root Admin",
-      contactNumber: "099999999",
-      completeAddress: "test address",
-    };
+    beforeEach(async () => {
+      await Promise.allSettled([User.deleteMany({})]);
+    });
 
     it("should return a non-404 response", (done) => {
       chai
@@ -69,6 +88,12 @@ describe("Integration test for user", () => {
     };
 
     it("User should be able to login using correct credentials", (done) => {
+      const loginURI = "/api/user/login";
+      const loginPayload = {
+        email: "testuser@admin.com",
+        password: "admin",
+      };
+
       chai
         .request(API_SERVER)
         .post(loginURI)
