@@ -3,9 +3,12 @@ require("dotenv").config();
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const MONGODB_DBASE = process.env.MONGODB_DB;
+const TEST_DBASE = process.env.MONGODB_TEST_DBASE;
 
 const MONGO_CONN_STRING =
-  process.env.MONGODB_URI_STAGING || MONGODB_URI + MONGODB_DBASE;
+  process.env.NODE_ENV === "test"
+    ? MONGODB_URI + TEST_DBASE
+    : process.env.MONGODB_URI_STAGING || MONGODB_URI + MONGODB_DBASE;
 
 const connectToDatabase = async () => {
   try {
