@@ -20,7 +20,6 @@ const payloadSchema = Joi.object({
 });
 
 module.exports = validateSignup = async (req, res, next) => {
-  // Perform of payload validations
   const { error } = payloadSchema.validate(req.body);
   if (error) {
     return res.status(422).json({ message: error.details[0].message });
