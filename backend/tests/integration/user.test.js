@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 
 describe("Integration test for user", () => {
   process.env.NODE_ENV = "test";
+  // @TODO - create a fixture to use separatte database when node env = test
 
   describe("GET /api/user/test", () => {
     const routerURI = "/api/user/test";
@@ -67,7 +68,7 @@ describe("Integration test for user", () => {
       password: "admin",
     };
 
-    it("User should be able to login", (done) => {
+    it("User should be able to login using correct credentials", (done) => {
       chai
         .request(API_SERVER)
         .post(loginURI)
@@ -76,6 +77,33 @@ describe("Integration test for user", () => {
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("accessToken");
           expect(res.body).to.have.property("user");
+          done();
+        });
+    });
+
+    it("User login should fail with incorrect password", (done) => {
+      loginPayload.password = "XXXXXXXXX";
+      chai
+        .request(API_SERVER)
+        .post(loginURI)
+        .send(loginPayload)
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body).to.have.property("message");
+          expect(res.body.message).to.be.equal("Invalid Credentials");
+          done();
+        });
+    });
+    it("User login should fail with incorrect email", (done) => {
+      loginPayload.email = "test.dddd";
+      chai
+        .request(API_SERVER)
+        .post(loginURI)
+        .send(loginPayload)
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body).to.have.property("message");
+          expect(res.body.message).to.be.equal("Invalid Credentials");
           done();
         });
     });

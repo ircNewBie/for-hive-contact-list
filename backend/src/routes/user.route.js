@@ -41,7 +41,8 @@ router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return res.json({ message: "Invalid Credentials" });
+    console.log("Invalid / incorrect Email address");
+    return res.status(401).json({ message: "Invalid Credentials" });
   }
 
   try {
@@ -56,17 +57,19 @@ router.post("/login", async (req, res) => {
       user.password = undefined;
       return res.json({ accessToken, user });
     } else {
-      return res.json({ message: "Invalid Credentials" });
+      return res.status(401).json({ message: "Invalid Credentials" });
     }
   } catch (e) {
     console.log(e);
-    return res.status(400).json({ message: "Failed to login" });
+    return res
+      .status(400)
+      .json({ message: "Unexpected Error!. Failed to login" });
   }
 });
 
-// router.get("/:id", auth, (req, res) => {
-//   const userId = req.params.id;
-//   res.send(`API: Get user with ID ${userId}`);
-// });
+router.get("/:id", auth, (req, res) => {
+  const userId = req.params.id;
+  res.send(`API: Get user with ID ${userId}`);
+});
 
 module.exports = router;

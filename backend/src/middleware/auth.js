@@ -3,7 +3,7 @@ module.exports = function auth(req, res, next) {
   const bearerToken = req.header("Authorization");
 
   if (!bearerToken) {
-    return res.status(401).json({ error: "Access denied" });
+    return res.status(401).json({ message: "Access denied" });
   }
   const token = bearerToken.split(" ")[1];
 
@@ -21,6 +21,6 @@ module.exports = function auth(req, res, next) {
     );
     next();
   } catch (err) {
-    res.status(401).json({ error: "Invalid authorization" });
+    res.status(422).json({ error: "Unexpected Error! Login failed" });
   }
 };
