@@ -76,4 +76,16 @@ router.get("/all", auth, async (req, res, next) => {
   }
 });
 
+router.get("/by-id", auth, async (req, res, next) => {
+  const userController = new UserController();
+
+  try {
+    const result = await userController.getUserById(req, res);
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+});
+
 module.exports = router;

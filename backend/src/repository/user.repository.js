@@ -30,6 +30,24 @@ class UserRepository {
       return new Exception("Failed to retrieve users", 400);
     }
   }
+  async findAndGetUser(userId) {
+    try {
+      const result = await this.User.findById(userId)
+        .populate({
+          path: "friends",
+          select: "fullName email contactNumber",
+        })
+        .populate({
+          path: "pendingFriends",
+          select: "fullName",
+        });
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to retrieve users", 400);
+    }
+  }
 }
 
 module.exports = UserRepository;

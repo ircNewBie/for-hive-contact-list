@@ -25,7 +25,21 @@ class UserController {
     if (result instanceof Exception) {
       return res.status(result.code).json({ message: result.message });
     }
-    return res.status(201).json({ message: "Success", data: result });
+    return res.status(200).json({ message: "Success", data: result });
+  }
+
+  async getUserById(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const userService = new UserService(new UserRepository(mongooseInstance));
+
+    const userId = req.query.id;
+
+    const result = await userService.getUserById(userId);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(200).json({ message: "Success", data: result });
   }
 }
 
