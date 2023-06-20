@@ -33,18 +33,18 @@ class ProfileService {
   //     }
   //   }
 
-  //   async getUserById(userId) {
-  //     if (!ObjectId.isValid(userId)) return new Exception("Invalid User Id", 422);
+  async getMyProfile(userId) {
+    if (!ObjectId.isValid(userId)) return new Exception("Invalid User Id", 422);
 
-  //     try {
-  //       const result = await this.userRepository.findAndGetUser(userId);
+    try {
+      const result = await this.userRepository.findAndGetUser(userId);
 
-  //       return result;
-  //     } catch (err) {
-  //       console.log(err);
-  //       return new Exception("Unexpected Error", 500);
-  //     }
-  //   }
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
 }
 
 module.exports = ProfileService;

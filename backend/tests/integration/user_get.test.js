@@ -70,13 +70,15 @@ describe("Integration test for GET users", async () => {
         });
     });
 
-    it(" Should return an object. ", (done) => {
+    it(" Should return an unauthorized using an invalid user credentials. ", (done) => {
+      validUserCreds.email = "XXXXXXXXXXXXXXXXX";
+
       chai
         .request(API_SERVER)
         .get(getAllURI)
         .send(validUserCreds)
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res).to.have.status(401);
           done();
         });
     });

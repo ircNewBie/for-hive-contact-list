@@ -67,23 +67,6 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post(
-  "/profile/:user_id",
-  auth,
-  validateProfile,
-  async (req, res, next) => {
-    const profileController = new ProfileController();
-
-    try {
-      const result = await profileController.createProfile(req, res);
-      return res.json(result);
-    } catch (error) {
-      // Pass the error to the error handling middleware
-      next(error);
-    }
-  }
-);
-
 router.get("/all", auth, async (req, res, next) => {
   const userController = new UserController();
 

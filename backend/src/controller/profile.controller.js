@@ -21,6 +21,21 @@ class ProfileController {
     }
     return res.status(201).json({ message: "success", data: result });
   }
+
+  async getMyProfile(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+
+    const profileService = new ProfileService(
+      new ProfileRepository(mongooseInstance)
+    );
+
+    const result = await profileService.getMyProfile(req.params.user_id);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(201).json({ message: "success", data: result });
+  }
 }
 
 module.exports = ProfileController;
