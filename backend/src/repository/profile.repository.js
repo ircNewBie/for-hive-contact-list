@@ -20,8 +20,6 @@ class ProfileRepository {
       const savedProfile = await profile.save();
 
       if (savedProfile != null) {
-        // const profile = await this.Profile.findById(savedProfile._id);
-
         const user = await User.findById(userId);
         user.profile = savedProfile._id;
         await user.save();
@@ -55,6 +53,23 @@ class ProfileRepository {
     } catch (err) {
       console.log("err", err);
       return new Exception("Failed to retrieve prfile", 400);
+    }
+  }
+
+  async findAndUpdateProfile(userId, updatedProfileData) {
+    try {
+      const profile = await this.Profile.findOne({ userId: userId });
+
+      const updatedProfile = await this.Profile.findByIdAndUpdate(
+        profile._id,
+        { $set: updatedProfileData },
+        { new: true }
+      );
+
+      return updatedProfile;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to create profile", 400);
     }
   }
 }

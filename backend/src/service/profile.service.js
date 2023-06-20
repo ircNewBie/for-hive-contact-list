@@ -22,6 +22,22 @@ class ProfileService {
     }
   }
 
+  async updateProfile(userId, payload) {
+    const profileData = payload;
+
+    try {
+      const result = await this.profileRepository.findAndUpdateProfile(
+        userId,
+        profileData
+      );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
   async getMyProfile(userId) {
     if (!ObjectId.isValid(userId)) return new Exception("Invalid User Id", 422);
 

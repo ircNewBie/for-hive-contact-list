@@ -33,13 +33,28 @@ router.get("/", auth, async (req, res, next) => {
 });
 
 /**
- *Create Profile
+ *Create user's  Profile
  */
 router.post("/user/:user_id", auth, validateProfile, async (req, res, next) => {
   const profileController = new ProfileController();
 
   try {
     const result = await profileController.createProfile(req, res);
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+});
+
+/**
+ *Update my Profile
+ */
+router.put("/", auth, async (req, res, next) => {
+  const profileController = new ProfileController();
+
+  try {
+    const result = await profileController.updateMyProfile(req, res);
     return res.json(result);
   } catch (error) {
     // Pass the error to the error handling middleware

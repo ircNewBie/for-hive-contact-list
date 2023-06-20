@@ -65,9 +65,9 @@ The Contact List App utilizes RESTful API endpoints for data exchange between th
 - User Management:
   - [X] POST /api/user/signup: Registers a new user.
   - [x] POST /api/user/login: Authenticates user login.
-  - [x] POST /api/user/profile: Creates personal user profile information.
-  - [ ] GET /api/user/profile: Retrieves user profile information.
-  - [ ] PUT /api/user/profile: Updates user profile information.
+  - [x] POST /api/profile/user/:user_id : Creates user profile information.
+  - [x] GET /api/profile: Retrieves user profile information.
+  - [x] PUT /api/profile: Updates user profile information.
 
 - Contact Management:
   - [ ] GET /api/contacts: Retrieves a user's contact list.
