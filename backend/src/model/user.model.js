@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const USER_ROLE = require("../constants/globals");
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -8,8 +9,13 @@ const userSchema = new mongoose.Schema({
   completeAddress: { type: String },
   role: {
     type: String,
-    enum: ["ROOT", "ADMIN", "SUPERVISOR", "USER"],
-    default: "USER",
+    enum: [
+      USER_ROLE.ROOT,
+      USER_ROLE.ADMIN,
+      USER_ROLE.SUPERVISOR,
+      USER_ROLE.USER,
+    ],
+    default: USER_ROLE.USER,
   },
   contacts: [{ type: String }],
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],

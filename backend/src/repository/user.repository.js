@@ -22,7 +22,7 @@ class UserRepository {
   }
   async findAndGetAllUsers() {
     try {
-      const result = await this.User.find({});
+      const result = await this.User.find({}).select("-password  -__v");
 
       return result;
     } catch (err) {
@@ -35,7 +35,7 @@ class UserRepository {
       const result = await this.User.findById(userId)
         .populate({
           path: "friends",
-          select: "fullName email contactNumber",
+          select: "fullName email contactNumber -password -__v",
         })
         .populate({
           path: "pendingFriends",
@@ -46,6 +46,31 @@ class UserRepository {
     } catch (err) {
       console.log("err", err);
       return new Exception("Failed to retrieve users", 400);
+    }
+  }
+
+  async findAndDeleteUser(userId) {
+    try {
+      const result = await this.User.findByIdAndDelete(userId);
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to delete user", 400);
+    }
+  }
+
+  async findAndUpdateUserRole(userData) {
+    try {
+      const updatedUser = await this.User.findByIdAndUpdate(
+        userData.user_id,
+        { $set: userData },
+        { new: true }
+      );
+
+      return updatedUser;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to update user role", 400);
     }
   }
 }

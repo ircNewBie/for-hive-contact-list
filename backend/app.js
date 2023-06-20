@@ -16,9 +16,11 @@ app.use(express.json());
 // Routes ----------------------------------------
 const userRouter = require("./src/routes/user.route");
 const profileRouter = require("./src/routes/profile.route");
+const adminRouter = require("./src/routes/admin.route");
 
 app.use("/api/user", userRouter);
 app.use("/api/profile", profileRouter);
+app.use("/api/admin", adminRouter);
 
 // Test route ----------------------------------------
 app.get("/", (req, res) => {

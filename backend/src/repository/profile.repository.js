@@ -52,7 +52,7 @@ class ProfileRepository {
       return result;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to retrieve prfile", 400);
+      return new Exception("Failed to retrieve user's profile", 400);
     }
   }
 
@@ -69,7 +69,7 @@ class ProfileRepository {
       return updatedProfile;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to create profile", 400);
+      return new Exception("Failed to update profile", 400);
     }
   }
 }

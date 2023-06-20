@@ -1,18 +1,15 @@
 var express = require("express");
 var router = express.Router();
-const ObjectId = require("mongoose").Types.ObjectId;
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const UserController = require("../controller/user.controller");
-const ProfileController = require("../controller/profile.controller");
-
 const validateSignup = require("../middleware/signup.validation");
 const auth = require("../middleware/auth");
-const validateProfile = require("../middleware/profile.validation");
 
+const UserController = require("../controller/user.controller");
 const User = require("../model/user.model");
+
 // test api
 router.get("/test", (req, res) => {
   res.status(200).json({ message: "Users' route is working!" });
@@ -21,11 +18,6 @@ router.get("/test", (req, res) => {
 /**
  * User Related Endpoints
  */
-router.get("/", auth, async (req, res) => {
-  const userController = new UserController();
-  return await userController.getAllUsers(req, res);
-});
-
 /* POST signup */
 router.post("/signup", validateSignup, async (req, res, next) => {
   const userController = new UserController();
@@ -40,6 +32,9 @@ router.post("/signup", validateSignup, async (req, res, next) => {
   }
 });
 
+/**
+ * User Login
+ */
 router.post("/login", async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -67,6 +62,9 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+/**
+ * GET all users
+ */
 router.get("/all", auth, async (req, res, next) => {
   const userController = new UserController();
 
@@ -79,6 +77,9 @@ router.get("/all", auth, async (req, res, next) => {
   }
 });
 
+/**
+ * GET user by id
+ */
 router.get("/by-id", auth, async (req, res, next) => {
   const userController = new UserController();
 
