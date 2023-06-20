@@ -27,7 +27,11 @@ class ProfileRepository {
         await user.save();
 
         // fetch updated user data
-        const result = await User.findById(userId).populate("profile");
+        const result = await User.findById(userId)
+          .select("-password -createdAt -__v")
+          .populate({
+            path: "profile",
+          });
         return result;
       }
 
@@ -38,7 +42,7 @@ class ProfileRepository {
     }
   }
 
-  async findAndGetUser(userId) {
+  async findAndGetUserProfile(userId) {
     try {
       const result = await this.User.findById(userId)
         .populate({
