@@ -22,22 +22,11 @@ class ProfileService {
     }
   }
 
-  //   async getAllUsers() {
-  //     try {
-  //       const result = await this.userRepository.findAndGetAllUsers();
-
-  //       return result;
-  //     } catch (err) {
-  //       console.log(err);
-  //       return new Exception("Unexpected Error", 500);
-  //     }
-  //   }
-
   async getMyProfile(userId) {
     if (!ObjectId.isValid(userId)) return new Exception("Invalid User Id", 422);
 
     try {
-      const result = await this.userRepository.findAndGetUser(userId);
+      const result = await this.profileRepository.findAndGetUserProfile(userId);
 
       return result;
     } catch (err) {

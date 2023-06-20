@@ -44,20 +44,17 @@ class ProfileRepository {
 
   async findAndGetUserProfile(userId) {
     try {
-      const result = await this.User.findById(userId)
-        .populate({
-          path: "friends",
-          select: "fullName email contactNumber",
-        })
-        .populate({
-          path: "pendingFriends",
-          select: "fullName",
-        });
+      const result = await this.Profile.findOne({ userId: userId })
+        .select(" -createdAt -__v")
+        .exec();
 
+      if (!result) {
+        return new Exception("Sorry,  profile not found", 404);
+      }
       return result;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to retrieve users", 400);
+      return new Exception("Failed to retrieve prfile", 400);
     }
   }
 }

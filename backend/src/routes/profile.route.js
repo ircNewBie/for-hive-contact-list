@@ -14,8 +14,27 @@ router.get("/test", (req, res) => {
 
 /**
  * Profile Related Endpoints
+    -----------------------------------
  */
 
+/**
+ * Get my profile
+ */
+router.get("/", auth, async (req, res, next) => {
+  const profileController = new ProfileController();
+
+  try {
+    const result = await profileController.getMyProfile(req, res);
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+});
+
+/**
+ *Create Profile
+ */
 router.post("/user/:user_id", auth, validateProfile, async (req, res, next) => {
   const profileController = new ProfileController();
 
