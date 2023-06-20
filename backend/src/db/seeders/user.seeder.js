@@ -1,6 +1,9 @@
 const User = require("../../model/user.model");
+
 const bcrypt = require("bcrypt");
 const saltlevel = 10;
+
+const USER_ROLE = require("../../constants/globals");
 
 const defaultPassword = "123456";
 
@@ -14,15 +17,46 @@ const userSeederRun = async () => {
       fullName: "Root Admin User",
       contactNumber: "099999999",
       completeAddress: "Temp address",
-      role: "ROOT",
+      role: USER_ROLE.ROOT,
+    },
+    {
+      email: "admin@admin.com",
+      password: encryptedPassword,
+      fullName: "Root Admin User",
+      contactNumber: "099999999",
+      completeAddress: "Temp address",
+      role: USER_ROLE.ADMIN,
     },
     {
       email: "user@email.com",
       password: encryptedPassword,
-      confirm_password: "user",
       fullName: "Regular User",
       contactNumber: "099999999",
       completeAddress: "Temp address",
+    },
+    {
+      email: "edelberto.mania@hivegroupinc.com",
+      password: encryptedPassword,
+      fullName: "Mdelberto Mania",
+      contactNumber: "099999999",
+      completeAddress: "Temp address",
+      role: USER_ROLE.ADMIN,
+    },
+    {
+      email: "sherwyn.ayao@hivegroupinc.com",
+      password: encryptedPassword,
+      fullName: "Sherwyn Ayao",
+      contactNumber: "099999999",
+      completeAddress: "Temp address",
+      role: USER_ROLE.ADMIN,
+    },
+    {
+      email: "elmo.villamante@hivegroupinc.com",
+      password: encryptedPassword,
+      fullName: "Elmo Villamante",
+      contactNumber: "099999999",
+      completeAddress: "Temp address",
+      role: USER_ROLE.ROOT,
     },
   ];
 

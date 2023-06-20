@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const USER_ROLE = require("../constants/globals");
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -6,12 +7,20 @@ const userSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   contactNumber: { type: String },
   completeAddress: { type: String },
-
   role: {
     type: String,
-    enum: ["ROOT", "ADMIN", "SUPERVISOR", "USER"],
-    default: "USER",
+    enum: [
+      USER_ROLE.ROOT,
+      USER_ROLE.ADMIN,
+      USER_ROLE.SUPERVISOR,
+      USER_ROLE.USER,
+    ],
+    default: USER_ROLE.USER,
   },
+  contacts: [{ type: String }],
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  pendingFriends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
 });
 
 // Create the User model from the User schema

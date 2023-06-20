@@ -1,21 +1,17 @@
-const bcrypt = require("bcrypt");
 const Exception = require("../utils/error.handler");
 const ObjectId = require("mongoose").Types.ObjectId;
 
-class UserService {
+class AdminService {
   constructor(userRepository) {
     this.userRepository = userRepository;
   }
 
-  async createUser(req, res) {
-    const userData = req.body;
-
+  async deleteUser(userId) {
     try {
-      const salt = await bcrypt.genSalt(10);
+      const result = await this.userRepository.findAndDeleteUser(userId);
 
-      userData.password = await bcrypt.hash(userData.password, salt);
+      if (!result) return new Exception("User not found!", 404);
 
-      const result = await this.userRepository.createUser(userData);
       return result;
     } catch (err) {
       console.log(err);
@@ -26,6 +22,19 @@ class UserService {
   async getAllUsers() {
     try {
       const result = await this.userRepository.findAndGetAllUsers();
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
+  async updateUserRole(userData) {
+    try {
+      const result = await this.userRepository.findAndUpdateUserRole(userData);
+
+      if (!result) return new Exception("User not found!", 404);
 
       return result;
     } catch (err) {
@@ -48,4 +57,4 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+module.exports = AdminService;
