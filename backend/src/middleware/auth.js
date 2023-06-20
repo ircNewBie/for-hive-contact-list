@@ -21,6 +21,6 @@ module.exports = function auth(req, res, next) {
     );
     next();
   } catch (err) {
-    res.status(422).json({ error: "Unexpected Error! Login failed" });
+    res.status(422).json({ error: "Unexpected Error! Authentication failed" });
   }
 };

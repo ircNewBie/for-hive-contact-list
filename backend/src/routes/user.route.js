@@ -1,13 +1,16 @@
 var express = require("express");
 var router = express.Router();
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const ObjectId = require("mongoose").Types.ObjectId;
 const UserController = require("../controller/user.controller");
+const ProfileController = require("../controller/profile.controller");
+
 const validateSignup = require("../middleware/signup.validation");
 const auth = require("../middleware/auth");
+const validateProfile = require("../middleware/profile.validation");
 
 const User = require("../model/user.model");
 // test api

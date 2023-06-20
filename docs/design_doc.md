@@ -63,37 +63,38 @@ The typical workflow of a user in the Contact List App involves the following st
 The Contact List App utilizes RESTful API endpoints for data exchange between the frontend and backend. Some example API endpoints include:
 
 - User Management:
-  - POST /api/user/signup: Registers a new user.
-  - POST /api/user/login: Authenticates user login.
-  - GET /api/user/profile: Retrieves user profile information.
-  - PUT /api/user/profile: Updates user profile information.
+  - [X] POST /api/user/signup: Registers a new user.
+  - [x] POST /api/user/login: Authenticates user login.
+  - [x] POST /api/profile/user/:user_id : Creates user profile information.
+  - [x] GET /api/profile: Retrieves user profile information.
+  - [x] PUT /api/profile: Updates user profile information.
 
 - Contact Management:
-  - GET /api/contacts: Retrieves a user's contact list.
-  - POST /api/contacts: Creates a new contact.
-  - PUT /api/contacts/:id: Updates an existing contact.
-  - DELETE /api/contacts/:id: Deletes a contact.
+  - [ ] GET /api/contacts: Retrieves a user's contact list.
+  - [ ] POST /api/contacts: Creates a new contact.
+  - [ ] PUT /api/contacts/:id: Updates an existing contact.
+  - [ ] DELETE /api/contacts/:id: Deletes a contact.
 
 - Friend Management:
-  - POST /api/friends/invite: Sends a friend invitation to another user.
-  - POST /api/friends/accept: Accepts a friend request.
-  - POST /api/friends/reject: Rejects a friend request.
-  - GET /api/friends/list: Retrieves a user's friend list.
+  - [ ] POST /api/friends/invite: Sends a friend invitation to another user.
+  - [ ] POST /api/friends/accept: Accepts a friend request.
+  - [ ] POST /api/friends/reject: Rejects a friend request.
+  - [ ] GET /api/friends/list: Retrieves a user's friend list.
 
 - Admin Panel:
-  - PUT /api/user/:id: Updates a user's profile information.
-  - DELETE /api/user/:id: Deletes a user account.
-  - PUT /api/user/:id/access-level: Updates a user's access level.
-  - GET /api/user/all : Get all signed up users
+  - [ ] PUT /api/user/:id: Updates a user's profile information.
+  - [ ] DELETE /api/user/:id: Deletes a user account.
+  - [ ] PUT /api/user/:id/access-level: Updates a user's access level.
+  - [ ] GET /api/user/all : Get all signed up users
 
-6. Security Considerations:
+1. Security Considerations:
 - Authentication: User authentication should be implemented securely, using strong password hashing and session management techniques.
 - Authorization: Access control should be enforced to ensure users can only perform actions they are authorized to do based on their access level.
 - Input Validation: All user inputs should be properly validated and sanitized on the server-side to prevent security vulnerabilities such as SQL injection and cross-site scripting (XSS).
 - Data Privacy: Personal user data and contact information should be stored securely and protected from unauthorized access.
 - HTTPS: The communication between the frontend and backend should be encrypted using HTTPS to ensure data integrity and confidentiality.
 
-7. Testing and Quality Assurance:
+1. Testing and Quality Assurance:
 - Unit Testing: Implement unit tests to verify the functionality of individual components and modules.
 - Integration Testing: Conduct integration tests to verify the interactions between different modules and components.
 - User Acceptance Testing: Involve users in testing the application to ensure it meets their requirements and expectations.
