@@ -11,7 +11,10 @@ class ProfileService {
     profileData.userId = userId;
 
     try {
-      const result = await this.profileRepository.createProfile(profileData);
+      const result = await this.profileRepository.createProfile(
+        profileData,
+        userId
+      );
       return result;
     } catch (err) {
       console.log(err);

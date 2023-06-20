@@ -1,4 +1,8 @@
+const ObjectId = require("mongoose").Types.ObjectId;
+
 const profileModel = require("../model/profile.model");
+const User = require("../model/user.model");
+
 const Exception = require("../utils/error.handler");
 
 class ProfileRepository {
@@ -9,14 +13,24 @@ class ProfileRepository {
     );
   }
 
-  async createProfile(profileData) {
+  async createProfile(profileData, userId) {
     try {
       let profile = new this.Profile(profileData);
+
       const savedProfile = await profile.save();
+
       if (savedProfile != null) {
-        profile = await this.Profile.findById(savedProfile._id);
-        return profile;
+        // const profile = await this.Profile.findById(savedProfile._id);
+
+        const user = await User.findById(userId);
+        user.profile = savedProfile._id;
+        await user.save();
+
+        // fetch updated user data
+        const result = await User.findById(userId).populate("profile");
+        return result;
       }
+
       return new Exception("Failed to save profile", 400);
     } catch (err) {
       console.log("err", err);

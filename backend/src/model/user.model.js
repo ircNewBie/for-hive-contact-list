@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   contacts: [{ type: String }],
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   pendingFriends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  personalProfile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
+  profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
 });
 
 // Create the User model from the User schema
