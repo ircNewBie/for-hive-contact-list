@@ -1,13 +1,16 @@
 var express = require("express");
 var router = express.Router();
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const ObjectId = require("mongoose").Types.ObjectId;
 const UserController = require("../controller/user.controller");
+const ProfileController = require("../controller/profile.controller");
+
 const validateSignup = require("../middleware/signup.validation");
 const auth = require("../middleware/auth");
+const validateProfile = require("../middleware/profile.validation");
 
 const User = require("../model/user.model");
 // test api
@@ -63,6 +66,23 @@ router.post("/login", async (req, res, next) => {
     next(error);
   }
 });
+
+router.post(
+  "/profile/:user_id",
+  auth,
+  validateProfile,
+  async (req, res, next) => {
+    const profileController = new ProfileController();
+
+    try {
+      const result = await profileController.createProfile(req, res);
+      return res.json(result);
+    } catch (error) {
+      // Pass the error to the error handling middleware
+      next(error);
+    }
+  }
+);
 
 router.get("/all", auth, async (req, res, next) => {
   const userController = new UserController();
