@@ -1,28 +1,78 @@
-# for-hive-conttact-list System
- 
-A contact list system.
 
-Create a sign up and sign in page
-b) The system must have a root admin user that can manage the sign up users
-(update/delete/promote/demote)
-c) User access Levels are as follows:
-i) Admin
-ii) Supervisor
-iii) User
-d) All users must have a profile page where they can update their profile information such as
-name, profile picture and other information.
-e) Users can invite other users as a friend.
-f) The Invited user has the capability to accept or deny friend requests.
-g) Any user can manage their contact list
-i) Create, Update and Delete
-ii) Share contact with other users that is on their friends list.
-2) Commit all your codes to your github repository and add the following as collaborators:
-a) edelberto.mania@hivegroupinc.com
-b) sherwyn.ayao@hivegroupinc.com
-c) elmo.villamante@hivegroupinc.com
-3) Deploy your app / tech exam output in any free web hosting and email us the username that can
-be used during the testing and the admin credentials (same email above - collaborators for
-github). If there is an expiration date with the free hosting site, kindly state that in the email.
-4) Email the recruiter that you completed the needs to be done step 1 and 2.
-Duration: The applicant must complete this within one week from the initial interview. Ex. Applicant was
-interviewed on a Monday therefore, this must be completed on or before Sunday same week.
+# Contact List App
+
+This is the README file for the Contact List App project. The Contact List App is a web-based application that allows users to manage their contacts, connect with friends, and maintain a personalized contact list.
+
+## Deployment
+
+The Contact List App is deployed on Vercel. 
+
+The frontend is deployed at [https://4hive-clist-fe.vercel.app/](https://4hive-clist-fe.vercel.app/) in the production environment, and the backend is deployed at [https://hi-clist-be.vercel.app/](https://hi-clist-be.vercel.app/) in the production environment.
+
+## Automatic Deployment and Preview Builds
+As part of the development workflow, the Contact List App has an automated deployment process and a pipeline for preview builds.
+
+### Automatic Deployment: 
+Every new merge to the master branch in the GitHub repository triggers an automatic deployment process. This ensures that the latest changes in the master branch are deployed to the production environment.
+
+### Preview Builds: 
+For each merge request, a pipeline is created to build and test the changes in a preview environment. This allows for testing the build's success or failure before merging it into the master branch.
+
+The automatic deployment and preview build processes help ensure that only stable and tested changes are deployed to the production environment, reducing the risk of introducing bugs or issues.
+
+## Technologies Used
+
+The Contact List App is built using the following technologies:
+
+### Frontend
+
+- ReactJS: A JavaScript library for building user interfaces.
+- Axios: A library for making HTTP requests to the backend API.
+- React Query: A data fetching and caching library for managing state and data synchronization.
+- Ant Design: A UI component library for React.
+
+### Backend
+
+- Node.js: A JavaScript runtime for server-side development.
+- Express: A web application framework for Node.js.
+- MongoDB: A NoSQL database for storing user data, contact information, and friend relationships.
+
+## Scripts
+
+To start the app locally, use the following scripts:
+
+### Backend Scripts
+
+- `tests`: Runs the backend tests using Mocha and Chai.
+- `start`: Starts the backend server.
+- `dev`: Starts the backend server with nodemon for development.
+- `seed`: Seeds the database with initial data (if applicable).
+
+### Frontend Scripts
+
+- `start`: Starts the frontend development server.
+- `build`: Builds the frontend for production.
+
+## Environment Variables
+
+For the backend, the following environment variables are required:
+
+```
+TOKEN_SECRET= <your secret key>
+MONGODB_URI=mongodb://localhost:27017/
+MONGODB_DB=<db-name>
+MONGODB_TEST_DBASE=<db-name>
+
+# Uncomment below line if you want to use the database at MongoAtlas
+# MONGODB_URI_STAGING= <your-mongodb-atlas-connection-string>
+```
+
+Please ensure that these environment variables are properly configured before running the backend.
+
+## Testing
+
+Testing is implemented for the backend using Mocha and Chai. 
+
+To run the backend tests, use the `tests` script.
+
+Please note that frontend testing has not been implemented in this version of the Contact List App.
