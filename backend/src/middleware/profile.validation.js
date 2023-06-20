@@ -12,7 +12,7 @@ const payloadSchema = Joi.object({
   socialMediaLinks: Joi.array().items(Joi.object()),
 });
 
-module.exports = validateProfile = async (req, res, next) => {
+const validateProfile = async (req, res, next) => {
   // Perform of payload validations
   const { user_id } = req.params;
   const currentUserId = req.user._id;
@@ -47,3 +47,25 @@ module.exports = validateProfile = async (req, res, next) => {
   // Validation successful, proceed to the next middleware or route handler
   next();
 };
+
+const validateProfileUpdate = async (req, res, next) => {
+  // Perform of payload validations
+  const currentUserId = req.user._id;
+
+  const { error } = payloadSchema.validate(req.body);
+  if (error) {
+    return res.status(422).json({ message: error.details[0].message });
+  }
+
+  const profileExists = await Profile.findOne({ userId: currentUserId });
+  if (!profileExists) {
+    return res
+      .status(422)
+      .json({ message: "Profile does not exist. Create one first" });
+  }
+
+  // Validation successful, proceed to the next middleware or route handler
+  next();
+};
+
+module.exports = { validateProfileUpdate, validateProfile };
