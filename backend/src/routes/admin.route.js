@@ -56,17 +56,18 @@ router.get("/get-all-users", auth, async (req, res, next) => {
 
 /**
  * Admins [ROOT]
- * PUT update user role
+ * PATCH update user role
  */
-router.put("/update-role", auth, async (req, res, next) => {
-  const userController = new UserController();
+router.patch("/user-role", auth, async (req, res, next) => {
+  const adminController = new AdminController();
 
-  if (req.user.role !== USER_ROLE.ADMIN && req.user.role !== USER_ROLE.ROOT) {
-    return res.status(401).json({ message: "Unauthorized User." });
+  if (req.user.role !== USER_ROLE.ROOT) {
+    return res.status(401).json({ message: "Unauthorized user." });
   }
 
   try {
-    const result = await userController.getUserById(req, res);
+    const result = await adminController.updateUserRole(req, res);
+
     return res.json(result);
   } catch (error) {
     // Pass the error to the error handling middleware

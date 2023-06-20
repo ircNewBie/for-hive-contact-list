@@ -84,7 +84,7 @@ The Contact List App utilizes RESTful API endpoints for data exchange between th
 - Admin Panel:
   - [ ] PUT /api/user/:id: Updates a user's profile information.
   - [x] DELETE /api/admin/delete-user?:user_id : Deletes a user account.
-  - [ ] PUT /api/user/:id/access-level: Updates a user's access level.
+  - [x] PATCH /api/admin/user-role?:user_id&:role  : Updates / changes user's access level.
   - [x] GET /api/admin/get-all-users : Get all signed up users
 
 1. Security Considerations:

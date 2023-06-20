@@ -9,6 +9,9 @@ class AdminService {
   async deleteUser(userId) {
     try {
       const result = await this.userRepository.findAndDeleteUser(userId);
+
+      if (!result) return new Exception("User not found!", 404);
+
       return result;
     } catch (err) {
       console.log(err);
@@ -19,6 +22,19 @@ class AdminService {
   async getAllUsers() {
     try {
       const result = await this.userRepository.findAndGetAllUsers();
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
+  async updateUserRole(userData) {
+    try {
+      const result = await this.userRepository.findAndUpdateUserRole(userData);
+
+      if (!result) return new Exception("User not found!", 404);
 
       return result;
     } catch (err) {

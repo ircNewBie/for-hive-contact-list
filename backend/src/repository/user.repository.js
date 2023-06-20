@@ -58,6 +58,21 @@ class UserRepository {
       return new Exception("Failed to delete user", 400);
     }
   }
+
+  async findAndUpdateUserRole(userData) {
+    try {
+      const updatedUser = await this.User.findByIdAndUpdate(
+        userData.user_id,
+        { $set: userData },
+        { new: true }
+      );
+
+      return updatedUser;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to update user role", 400);
+    }
+  }
 }
 
 module.exports = UserRepository;
