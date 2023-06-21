@@ -17,11 +17,6 @@ const runSeeders = async () => {
     });
 
     await userSeederRun();
-    // await regionSeederRun();
-    // await provinceSeederRun();
-    // await cityMunicipalitySeederRun();
-    // await cityMunicipalityBarangaysSeederRun();
-    // await purokSeedRun();
 
     console.log("All seeders finished successfully.");
     mongoose.disconnect();

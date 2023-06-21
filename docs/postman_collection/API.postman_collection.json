@@ -74,7 +74,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/user/by-id?id=6490925e884c25c67c7a514e",
+							"raw": "{{url}}/api/user/by-id?id=6492616f3b5211fbe2399dea",
 							"host": [
 								"{{url}}"
 							],
@@ -86,7 +86,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "6490925e884c25c67c7a514e"
+									"value": "6492616f3b5211fbe2399dea"
 								}
 							]
 						}
@@ -100,7 +100,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n  \"email\": \"testuse2r@admin.com\",\n  \"password\": \"admin\",\n  \"confirm_password\": \"admin\",\n  \"fullName\": \"Root Admin2\",\n  \"contactNumber\": \"099999999\",\n  \"completeAddress\": \"test address\"\n}",
+							"raw": " {\n  \"email\": \"testuser@admin.com\",\n  \"password\": \"admin\",\n  \"confirm_password\": \"admin\",\n  \"fullName\": \"Root Admin2\",\n  \"contactNumber\": \"099999999\",\n  \"completeAddress\": \"test address\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +147,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n  \"email\": \"root@admin.com\",\n  \"password\": \"123456\"\n}",
+							"raw": " {\n  \"email\": \"elmo.villamante@hivegroupinc.com\",\n  \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -303,7 +303,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/profile/user/64916bf058444ee20526f725",
+							"raw": "{{url}}/api/profile/user/6491deee566694e5593ce335",
 							"host": [
 								"{{url}}"
 							],
@@ -311,7 +311,7 @@
 								"api",
 								"profile",
 								"user",
-								"64916bf058444ee20526f725"
+								"6491deee566694e5593ce335"
 							]
 						}
 					},
@@ -341,11 +341,11 @@
 								}
 							]
 						},
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"socialMediaLinks\": [\n        {\n            \"friendster\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"cooking\",\n        \"farming\",\n        \"programming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"socialMediaLinks\": [\n        {\n            \"github\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -484,7 +484,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/admin/delete-user?user_id=6491b9810d2dd8f03576c88d",
+							"raw": "{{url}}/api/admin/delete-user?user_id=6491deee566694e5593ce332",
 							"host": [
 								"{{url}}"
 							],
@@ -496,7 +496,7 @@
 							"query": [
 								{
 									"key": "user_id",
-									"value": "6491b9810d2dd8f03576c88d"
+									"value": "6491deee566694e5593ce332"
 								}
 							]
 						}
@@ -644,13 +644,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/profile",
+							"raw": "{{url}}/api/admin/test",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"profile"
+								"admin",
+								"test"
 							]
 						}
 					},
@@ -729,7 +730,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \" Contact Three\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"0099999999\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
+							"raw": "{\n    \"name\": \" Contact  Six\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"0099999999\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -745,6 +746,65 @@
 								"api",
 								"contact",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Share contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \" Contact Three\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"0099999999\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/contact/share?friend_id=6492f00969bceef800a6b2e8&contact_id=6492fca2c914bb5bc9cb7eeb",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"contact",
+								"share"
+							],
+							"query": [
+								{
+									"key": "friend_id",
+									"value": "6492f00969bceef800a6b2e8"
+								},
+								{
+									"key": "contact_id",
+									"value": "6492fca2c914bb5bc9cb7eeb"
+								}
 							]
 						}
 					},
@@ -777,13 +837,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/profile",
+							"raw": "{{url}}/api/contact/test",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"profile"
+								"contact",
+								"test"
 							]
 						}
 					},
@@ -816,13 +877,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/profile",
+							"raw": "{{url}}/api/contact/all",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"profile"
+								"contact",
+								"all"
 							]
 						}
 					},
@@ -864,7 +926,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/contact/delete?contact_id=6491b9810d2dd8f03576c88d",
+							"raw": "{{url}}/api/contact/delete?contact_id=6492f41efdb758948052c850",
 							"host": [
 								"{{url}}"
 							],
@@ -876,7 +938,62 @@
 							"query": [
 								{
 									"key": "contact_id",
-									"value": "6491b9810d2dd8f03576c88d"
+									"value": "6492f41efdb758948052c850"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update  contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \" Contact  One\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"000000\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/contact/update?contact_id=6492b5de8f7c2bdd7aab9182",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"contact",
+								"update"
+							],
+							"query": [
+								{
+									"key": "contact_id",
+									"value": "6492b5de8f7c2bdd7aab9182"
 								}
 							]
 						}
