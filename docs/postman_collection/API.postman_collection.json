@@ -1,0 +1,812 @@
+{
+	"info": {
+		"_postman_id": "d11c95e9-67f6-4a71-8e8f-1a4f0d2f953b",
+		"name": "temp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17159107",
+		"_collection_link": "https://mb-vcapital.postman.co/workspace/side-projects~64d84139-8da5-484e-b8fb-5b94fc5f1c6d/collection/17159107-d11c95e9-67f6-4a71-8e8f-1a4f0d2f953b?action=share&creator=17159107&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Test user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by iid",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/by-id?id=6490925e884c25c67c7a514e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"by-id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6490925e884c25c67c7a514e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n  \"email\": \"testuse2r@admin.com\",\n  \"password\": \"admin\",\n  \"confirm_password\": \"admin\",\n  \"fullName\": \"Root Admin2\",\n  \"contactNumber\": \"099999999\",\n  \"completeAddress\": \"test address\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ROOT-Admin login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    const jsonData = JSON.parse(responseBody)",
+									"    postman.setEnvironmentVariable(\"token\", jsonData.accessToken)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n  \"email\": \"root@admin.com\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADMIN-Admin login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    const jsonData = JSON.parse(responseBody)",
+									"    postman.setEnvironmentVariable(\"token\", jsonData.accessToken)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n  \"email\": \"edelberto.mania@hivegroupinc.com\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Regular USER  -  login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    const jsonData = JSON.parse(responseBody)",
+									"    postman.setEnvironmentVariable(\"token\", jsonData.accessToken)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n  \"email\": \"user@email.com\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "create user profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"driving\",\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"profession\": \"Professional Chef\",\n    \"profilePhoto\": \"https://publicdomainvectors.org/photos/generic-avatar.png\",\n    \"socialMediaLinks\": [\n        {\n            \"facebook\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/profile/user/64916bf058444ee20526f725",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"user",
+								"64916bf058444ee20526f725"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update  my  profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"socialMediaLinks\": [\n        {\n            \"friendster\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Functions",
+			"item": [
+				{
+					"name": "Delete a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"socialMediaLinks\": [\n        {\n            \"friendster\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/admin/delete-user?user_id=6491b9810d2dd8f03576c88d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delete-user"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "6491b9810d2dd8f03576c88d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user' Role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"socialMediaLinks\": [\n        {\n            \"friendster\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/admin/user-role?user_id=6491c7286a1a313a295ff94f&role=ADMIN",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user-role"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "6491c7286a1a313a295ff94f"
+								},
+								{
+									"key": "role",
+									"value": "ADMIN"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user' Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"Elmo Astig Villamante\",\n    \"contactNumber\": \"09991999\",\n    \"completeAddress\": \"Temp address\",\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"cooking\",\n        \"farming\",\n        \"programming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\",\n        \"codingg\"\n    ],\n    \"role\": \"ROOT\",\n    \"profession\": \"Professional Chef\",\n    \"profilePhoto\": \"https://publicdomainvectors.org/photos/generic-avatar.png\",\n    \"socialMediaLinks\": [\n        {\n            \"friendster\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/admin/user-profile?user_id=6491deee566694e5593ce333",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user-profile"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "6491deee566694e5593ce333"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin view all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/admin/get-all-users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"get-all-users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "create contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"driving\",\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"profession\": \"Professional Chef\",\n    \"profilePhoto\": \"https://publicdomainvectors.org/photos/generic-avatar.png\",\n    \"socialMediaLinks\": [\n        {\n            \"facebook\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/contact/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"contact",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
