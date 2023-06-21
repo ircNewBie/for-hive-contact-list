@@ -93,13 +93,13 @@ const validateContactShare = async (req, res, next) => {
     });
 
   // contact to be shared should be in current user's contacts
-  if (!currentUser.contacts.includes(friendId)) {
+  if (!currentUser.friends.includes(friendId)) {
     return res.status(401).json({
       message: "Cannot share contact to this user. Not a friend yet.",
     });
   }
 
-  if (!currentUser.friends.includes(contactId)) {
+  if (!currentUser.contacts.includes(contactId)) {
     return res
       .status(404)
       .json({ message: "Contact not found in your contact list." });
