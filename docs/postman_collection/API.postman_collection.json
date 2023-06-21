@@ -729,7 +729,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"driving\",\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"profession\": \"Professional Chef\",\n    \"profilePhoto\": \"https://publicdomainvectors.org/photos/generic-avatar.png\",\n    \"socialMediaLinks\": [\n        {\n            \"facebook\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"raw": "{\n    \"name\": \" Contact Three\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"0099999999\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -737,14 +737,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/contact/add",
+							"raw": "{{url}}/api/contact/create",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"contact",
-								"add"
+								"create"
 							]
 						}
 					},
@@ -784,6 +784,100 @@
 							"path": [
 								"api",
 								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my contacts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aboutBio\": \"Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.\",\n    \"skills\": [\n        \"cooking\",\n        \"farming\"\n    ],\n    \"hobbies\": [\n        \"playing pool\",\n        \"biking\"\n    ],\n    \"socialMediaLinks\": [\n        {\n            \"friendster\": \"https://mypublic.profile.site\"\n        },\n        {\n            \"linkedIn\": \"https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/contact/delete?contact_id=6491b9810d2dd8f03576c88d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"contact",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "contact_id",
+									"value": "6491b9810d2dd8f03576c88d"
+								}
 							]
 						}
 					},
