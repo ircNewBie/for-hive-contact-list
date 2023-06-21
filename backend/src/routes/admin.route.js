@@ -75,4 +75,24 @@ router.patch("/user-role", auth, async (req, res, next) => {
   }
 });
 
+/**
+ * Admins
+ * PATCH update user profile
+ */
+router.patch("/user-profile", auth, async (req, res, next) => {
+  const adminController = new AdminController();
+
+  if (req.user.role !== USER_ROLE.ROOT && req.user.role !== USER_ROLE.ADMIN) {
+    return res.status(401).json({ message: "Unauthorized user." });
+  }
+
+  try {
+    const result = await adminController.updateUserProfile(req, res);
+
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+});
 module.exports = router;

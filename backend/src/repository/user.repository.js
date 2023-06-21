@@ -1,9 +1,14 @@
 const userModel = require("../model/user.model");
+const profileModel = require("../model/profile.model");
 const Exception = require("../utils/error.handler");
 
 class UserRepository {
   constructor(mongooseInstance) {
     this.User = mongooseInstance.model(userModel.modelName, userModel.schema);
+    this.Profile = mongooseInstance.model(
+      profileModel.modelName,
+      profileModel.schema
+    );
   }
 
   async createUser(userData) {
@@ -22,7 +27,9 @@ class UserRepository {
   }
   async findAndGetAllUsers() {
     try {
-      const result = await this.User.find({}).select("-password  -__v");
+      const result = await this.User.find({})
+        .populate("profile")
+        .select("-password  -__v");
 
       return result;
     } catch (err) {
@@ -40,8 +47,8 @@ class UserRepository {
         .populate({
           path: "pendingFriends",
           select: "fullName",
-        });
-
+        })
+        .populate("profile");
       return result;
     } catch (err) {
       console.log("err", err);
@@ -51,7 +58,10 @@ class UserRepository {
 
   async findAndDeleteUser(userId) {
     try {
+      // deletes user profile if it exists
+      await this.Profile.findOneAndDelete({ userId: userId });
       const result = await this.User.findByIdAndDelete(userId);
+
       return result;
     } catch (err) {
       console.log("err", err);
@@ -71,6 +81,60 @@ class UserRepository {
     } catch (err) {
       console.log("err", err);
       return new Exception("Failed to update user role", 400);
+    }
+  }
+
+  async findAndUpdateUserProfile(userData, profileData) {
+    const userId = userData.userId;
+    let updatedProfile = {};
+    let updatedUser = {};
+
+    const user = await this.User.findById(userId);
+
+    if (!user) {
+      return new Exception("User not found", 404);
+    }
+
+    const profileExists = await this.Profile.findOne({
+      userId: userId,
+    });
+
+    try {
+      // update profile if it exists and create  otherwise
+      if (profileExists) {
+        const profileId = profileExists._id;
+
+        updatedProfile = await this.Profile.findByIdAndUpdate(
+          profileId,
+          { $set: profileData },
+          { new: true }
+        );
+      } else {
+        profileData.userId = userId;
+
+        const newProfile = new this.Profile(profileData);
+        updatedProfile = await newProfile.save();
+        userData.profile = updatedProfile._id;
+      }
+
+      updatedUser = await this.User.findByIdAndUpdate(
+        userData.userId,
+        { $set: userData },
+        { new: true }
+      )
+        .select("-password -friends -pendingFriends -contacts -__v")
+        .populate({
+          path: "profile",
+          select: "-_id -userId -__v",
+        });
+
+      return updatedUser;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception(
+        "Unexpected error! Failed to update user profile",
+        400
+      );
     }
   }
 }

@@ -4,6 +4,7 @@ const UserService = require("../service/user.service");
 const AdminService = require("../service/admin.service");
 
 const UserRepository = require("../repository/user.repository");
+
 const USER_ROLE = require("../constants/globals");
 
 class AdminController {
@@ -52,6 +53,23 @@ class AdminController {
     return res
       .status(200)
       .json({ message: "Role Updated Successfully ", data: result });
+  }
+
+  async updateUserProfile(req, res) {
+    const payload = req.body;
+    const userId = req.query.user_id;
+
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const adminService = new AdminService(new UserRepository(mongooseInstance));
+
+    const result = await adminService.updateUserProfile(userId, payload);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res
+      .status(200)
+      .json({ message: "Profile Updated Successfully ", data: result });
   }
 }
 
