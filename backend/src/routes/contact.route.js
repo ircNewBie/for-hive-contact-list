@@ -4,6 +4,7 @@ var router = express.Router();
 const {
   validateContact,
   validateContactUpdate,
+  validateContactShare,
 } = require("../middleware/contact.validation");
 const auth = require("../middleware/auth");
 
@@ -80,21 +81,16 @@ router.patch("/update", auth, validateContactUpdate, async (req, res, next) => {
 /**
  *  Share contact
  */
-router.post(
-  "/share",
-  auth,
-  // validateContactShare,
-  async (req, res, next) => {
-    const contactController = new ContactController();
+router.post("/share", auth, validateContactShare, async (req, res, next) => {
+  const contactController = new ContactController();
 
-    try {
-      const result = await contactController.shareContactToFriend(req, res);
-      return res.json(result);
-    } catch (error) {
-      // Pass the error to the error handling middleware
-      next(error);
-    }
+  try {
+    const result = await contactController.shareContactToFriend(req, res);
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
   }
-);
+});
 
 module.exports = router;

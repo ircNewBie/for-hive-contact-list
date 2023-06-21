@@ -63,4 +63,61 @@ const validateContactUpdate = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateContact, validateContactUpdate };
+const validateContactShare = async (req, res, next) => {
+  if (
+    !(
+      req.query.hasOwnProperty("friend_id") &&
+      req.query.hasOwnProperty("contact_id")
+    )
+  )
+    return res.status(422).json({
+      message: `Invalid request property. Expecting 'friend_id' & 'contact_id'`,
+    });
+
+  const currentUserId = req.user._id;
+  const friendId = req.query.friend_id;
+  const contactId = req.query.contact_id;
+
+  if (!ObjectId.isValid(friendId))
+    return res.status(422).json({ message: "Invalid Friend Id" });
+
+  if (!ObjectId.isValid(contactId))
+    return res.status(422).json({ message: "Invalid Contact Id" });
+
+  const currentUser = await User.findById(currentUserId);
+  const myFriend = await User.findById(friendId);
+
+  if (!myFriend)
+    res.status(404).json({
+      message: `Friend not found.`,
+    });
+
+  // contact to be shared should be in current user's contacts
+  if (!currentUser.contacts.includes(friendId)) {
+    return res.status(401).json({
+      message: "Cannot share contact to this user. Not a friend yet.",
+    });
+  }
+
+  if (!currentUser.friends.includes(contactId)) {
+    return res
+      .status(404)
+      .json({ message: "Contact not found in your contact list." });
+  }
+
+  // contact should not have been shared yet with this friend
+  if (myFriend.sharedContacts.includes(contactId)) {
+    return res.status(422).json({
+      message: `You already shared this contact to  ${myFriend.fullName}.`,
+    });
+  }
+
+  // Validation successful
+  next();
+};
+
+module.exports = {
+  validateContact,
+  validateContactUpdate,
+  validateContactShare,
+};
