@@ -40,14 +40,14 @@ class UserRepository {
   async findAndGetUser(userId) {
     try {
       const result = await this.User.findById(userId)
-        .populate({
-          path: "friends",
-          select: "fullName email contactNumber -password -__v",
-        })
-        .populate({
-          path: "pendingFriends",
-          select: "fullName",
-        })
+        // .populate({
+        //   path: "friends",
+        //   select: "fullName email contactNumber -password -__v",
+        // })
+        // .populate({
+        //   path: "pendingFriends",
+        //   select: "fullName",
+        // })
         .populate("profile");
       return result;
     } catch (err) {

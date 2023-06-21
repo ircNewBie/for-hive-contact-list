@@ -1,5 +1,5 @@
 const contactModel = require("../model/contact.model");
-const userModel = require("../model/user.model");
+const User = require("../model/user.model");
 
 const Exception = require("../utils/error.handler");
 
@@ -9,7 +9,6 @@ class ContactRepository {
       contactModel.modelName,
       contactModel.schema
     );
-    this.User = mongooseInstance.model(userModel.modelName, userModel.schema);
   }
 
   async createContact(contactData) {
@@ -20,6 +19,12 @@ class ContactRepository {
       if (!savedContact) {
         return new Exception("Failed to save user", 400);
       }
+
+      // update user's contacts.
+      const thisUser = await User.findById(contactData.createdBy);
+
+      const updateUserContacts = await thisUser.addContact(savedContact._id);
+      console.log(updateUserContacts);
 
       contact = await this.Contact.findById(savedContact._id).select(
         "-createdBy -__v"

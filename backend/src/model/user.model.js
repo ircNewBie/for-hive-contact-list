@@ -23,6 +23,17 @@ const userSchema = new mongoose.Schema({
   profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
 });
 
+// Define the instance method
+userSchema.methods.addContact = async function (contactId) {
+  try {
+    this.contacts.push(contactId);
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Create the User model from the User schema
 const User = mongoose.model("User", userSchema);
 

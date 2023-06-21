@@ -17,7 +17,7 @@ router.get("/test", (req, res) => {
  */
 /* POST create contact */
 
-router.post("/add", auth, validateContact, async (req, res, next) => {
+router.post("/create", auth, validateContact, async (req, res, next) => {
   const contactController = new ContactController();
 
   try {

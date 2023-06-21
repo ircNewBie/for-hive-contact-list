@@ -11,7 +11,7 @@ class ContactService {
     const contactData = req.body;
 
     try {
-      // contactData.createdBy = req.user._id;
+      contactData.createdBy = req.user._id;
       const result = await this.repository.createContact(contactData);
 
       return result;
