@@ -23,10 +23,29 @@ const userSchema = new mongoose.Schema({
   profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
 });
 
-// Define the instance method
+/**
+ *
+ * @param {*} contactId
+ * @returns user
+ */
 userSchema.methods.addContact = async function (contactId) {
   try {
     this.contacts.push(contactId);
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ *
+ * @param {*} contactId
+ * @returns user
+ */
+userSchema.methods.removeAContact = async function (contactIdToRemove) {
+  try {
+    this.contacts = this.contacts.filter((id) => id !== contactIdToRemove);
     await this.save();
     return this;
   } catch (error) {

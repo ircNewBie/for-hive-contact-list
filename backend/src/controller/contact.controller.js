@@ -32,9 +32,27 @@ class ContactController {
     if (result instanceof Exception) {
       return res.status(result.code).json({ message: result.message });
     }
-    return res.status(200).json({ message: "Success", data: result });
+    return res.status(200).json({ message: "My Contacts", data: result });
   }
+  async deleteAContact(req, res) {
+    const currentUser = req.user;
+    const contactToDelete = req.query.contact_id;
 
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const contactService = new ContactService(
+      new ContactRepository(mongooseInstance)
+    );
+
+    const result = await contactService.deleteCurrentUserContact(
+      currentUser,
+      contactToDelete
+    );
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(200).json({ message: "Contact deleted.", data: result });
+  }
   // async getUserById(req, res) {
   //   const mongooseInstance = req.app.get("mongooseInstance");
   //   const userService = new UserService(new UserRepository(mongooseInstance));

@@ -73,7 +73,7 @@ The Contact List App utilizes RESTful API endpoints for data exchange between th
   - [x] GET /api/contact/all: Retrieves a user's contact list.
   - [x] POST /api/contact/create : Creates a new contact.
   - [ ] PATCH /api/contact/:id: Updates an existing contact.
-  - [ ] DELETE /api/contacts/:id: Deletes a contact.
+  - [x] DELETE /api/contact/delete : Deletes a contact.
 
 - Friend Management:
   - [ ] POST    /api/friends/invite: Sends a friend invitation to another user.

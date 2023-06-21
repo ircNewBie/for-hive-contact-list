@@ -50,37 +50,25 @@ class ContactRepository {
     }
   }
 
-  //   async findAndGetUser(userId) {
-  //     try {
-  //       const result = await this.User.findById(userId)
-  //         .populate({
-  //           path: "friends",
-  //           select: "fullName email contactNumber -password -__v",
-  //         })
-  //         .populate({
-  //           path: "pendingFriends",
-  //           select: "fullName",
-  //         })
-  //         .populate("profile");
-  //       return result;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       return new Exception("Failed to retrieve users", 400);
-  //     }
-  //   }
+  async findAndDeleteCurrentUserContact(currentUser, contactToDelete) {
+    try {
+      const thisUser = await User.findById(currentUser._id);
 
-  //   async findAndDeleteUser(userId) {
-  //     try {
-  //       // deletes user profile if it exists
-  //       await this.Profile.findOneAndDelete({ userId: userId });
-  //       const result = await this.User.findByIdAndDelete(userId);
+      // remove the contact id from the user's contacts array
+      await thisUser.removeAContact(contactToDelete);
 
-  //       return result;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       return new Exception("Failed to delete user", 400);
-  //     }
-  //   }
+      const result = await this.Contact.findByIdAndDelete(contactToDelete);
+
+      if (!result) {
+        return new Exception("Contact not found", 404);
+      }
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to delete contact", 400);
+    }
+  }
 
   //   async findAndUpdateUserRole(userData) {
   //     try {

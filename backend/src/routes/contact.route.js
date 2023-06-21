@@ -46,18 +46,18 @@ router.get("/all", auth, async (req, res, next) => {
 });
 
 /**
- * GET user by id
-//  */
-// router.get("/by-id", auth, async (req, res, next) => {
-//   const userController = new UserController();
+ * DELETE user's  contact
+ */
+router.delete("/delete", auth, async (req, res, next) => {
+  const contactController = new ContactController();
 
-//   try {
-//     const result = await userController.getUserById(req, res);
-//     return res.json(result);
-//   } catch (error) {
-//     // Pass the error to the error handling middleware
-//     next(error);
-//   }
-// });
+  try {
+    const result = await contactController.deleteAContact(req, res);
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+});
 
 module.exports = router;

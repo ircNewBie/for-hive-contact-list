@@ -34,6 +34,23 @@ class ContactService {
     }
   }
 
+  async deleteCurrentUserContact(currentUser, contactToDelete) {
+    if (!ObjectId.isValid(contactToDelete))
+      return new Exception("Invalid contact", 422);
+
+    try {
+      const result = await this.repository.findAndDeleteCurrentUserContact(
+        currentUser,
+        contactToDelete
+      );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
   //   async getUserById(userId) {
   //     if (!ObjectId.isValid(userId)) return new Exception("Invalid User Id", 422);
 
