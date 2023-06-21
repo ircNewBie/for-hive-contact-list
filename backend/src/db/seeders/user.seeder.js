@@ -1,4 +1,5 @@
 const User = require("../../model/user.model");
+const Profile = require("../../model/profile.model");
 
 const bcrypt = require("bcrypt");
 const saltlevel = 10;
@@ -62,7 +63,7 @@ const userSeederRun = async () => {
 
   try {
     // drop Users if collection exists
-    await Promise.allSettled([User.deleteMany({})]);
+    await Promise.allSettled([User.deleteMany({}), Profile.deleteMany({})]);
 
     console.log("Users collection has been cleared");
 

@@ -76,15 +76,15 @@ The Contact List App utilizes RESTful API endpoints for data exchange between th
   - [ ] DELETE /api/contacts/:id: Deletes a contact.
 
 - Friend Management:
-  - [ ] POST /api/friends/invite: Sends a friend invitation to another user.
-  - [ ] POST /api/friends/accept: Accepts a friend request.
-  - [ ] POST /api/friends/reject: Rejects a friend request.
-  - [ ] GET /api/friends/list: Retrieves a user's friend list.
+  - [ ] POST    /api/friends/invite: Sends a friend invitation to another user.
+  - [ ] POST    /api/friends/accept: Accepts a friend request.
+  - [ ] POST    /api/friends/reject: Rejects a friend request.
+  - [ ] GET     /api/friends/list: Retrieves a user's friend list.
 
 - Admin Panel:
-  - [ ] PUT /api/user/:id: Updates a user's profile information.
-  - [x] DELETE /api/admin/delete-user?:user_id : Deletes a user account.
-  - [x] PATCH /api/admin/user-role?:user_id&:role  : Updates / changes user's access level.
+  - [x] PATCH   /api/admin/user-profile/:id: Updates a user's profile information.
+  - [x] DELETE  /api/admin/delete-user?:user_id : Deletes a user account.
+  - [x] PATCH   /api/admin/user-role?:user_id&:role  : Updates / changes user's access level.
   - [x] GET /api/admin/get-all-users : Get all signed up users
 
 1. Security Considerations:
