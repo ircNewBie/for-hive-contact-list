@@ -67,24 +67,25 @@ The Contact List App utilizes RESTful API endpoints for data exchange between th
   - [x] POST /api/user/login: Authenticates user login.
   - [x] POST /api/profile/user/:user_id : Creates user profile information.
   - [x] GET /api/profile: Retrieves user profile information.
-  - [x] PUT /api/profile: Updates user profile information.
+  - [x] PATCH /api/profile: Updates user profile information.
 
 - Contact Management:
-  - [ ] GET /api/contacts: Retrieves a user's contact list.
-  - [ ] POST /api/contacts: Creates a new contact.
-  - [ ] PUT /api/contacts/:id: Updates an existing contact.
-  - [ ] DELETE /api/contacts/:id: Deletes a contact.
+  - [x] GET /api/contact/all: Retrieves a user's contact list.
+  - [x] POST /api/contact/create : Creates a new contact.
+  - [x] PATCH /api/contact/update : Updates an existing contact.
+  - [x] DELETE /api/contact/delete : Deletes a contact.
+  - [x] POST /api/contact/share : Share a contact to a friend.
 
 - Friend Management:
-  - [ ] POST /api/friends/invite: Sends a friend invitation to another user.
-  - [ ] POST /api/friends/accept: Accepts a friend request.
-  - [ ] POST /api/friends/reject: Rejects a friend request.
-  - [ ] GET /api/friends/list: Retrieves a user's friend list.
+  - [ ] POST    /api/friends/invite: Sends a friend invitation to another user.
+  - [ ] POST    /api/friends/accept: Accepts a friend request.
+  - [ ] POST    /api/friends/reject: Rejects a friend request.
+  - [ ] GET     /api/friends/list: Retrieves a user's friend list.
 
 - Admin Panel:
-  - [ ] PUT /api/user/:id: Updates a user's profile information.
-  - [x] DELETE /api/admin/delete-user?:user_id : Deletes a user account.
-  - [x] PATCH /api/admin/user-role?:user_id&:role  : Updates / changes user's access level.
+  - [x] PATCH   /api/admin/user-profile/:id: Updates a user's profile information.
+  - [x] DELETE  /api/admin/delete-user?:user_id : Deletes a user account.
+  - [x] PATCH   /api/admin/user-role?:user_id&:role  : Updates / changes user's access level.
   - [x] GET /api/admin/get-all-users : Get all signed up users
 
 1. Security Considerations:

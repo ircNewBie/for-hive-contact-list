@@ -22,7 +22,7 @@ class UserRepository {
       return new Exception("Failed to save user", 400);
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to create user", 400);
+      return new Exception("Failed to create user", 500);
     }
   }
   async findAndGetAllUsers() {
@@ -34,25 +34,16 @@ class UserRepository {
       return result;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to retrieve users", 400);
+      return new Exception("Failed to retrieve users", 500);
     }
   }
   async findAndGetUser(userId) {
     try {
-      const result = await this.User.findById(userId)
-        .populate({
-          path: "friends",
-          select: "fullName email contactNumber -password -__v",
-        })
-        .populate({
-          path: "pendingFriends",
-          select: "fullName",
-        })
-        .populate("profile");
+      const result = await this.User.findById(userId).populate("profile");
       return result;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to retrieve users", 400);
+      return new Exception("Failed to retrieve users", 500);
     }
   }
 
@@ -80,7 +71,7 @@ class UserRepository {
       return updatedUser;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to update user role", 400);
+      return new Exception("Unexpected error! Failed to update user role", 500);
     }
   }
 
@@ -133,7 +124,7 @@ class UserRepository {
       console.log("err", err);
       return new Exception(
         "Unexpected error! Failed to update user profile",
-        400
+        500
       );
     }
   }

@@ -1,0 +1,25 @@
+{
+    "fullName": "Test Name",
+    "contactNumber": "099999999",
+    "completeAddress": "Temp address",
+    "aboutBio": "Lorem ipsum dolor sit amet. Est alias doloremque sit pariatur eaque id dignissimos itaque rem quam corrupti. Et aliquam rerum aut quia perspiciatis et beatae necessitatibus qui dolores iste quo omnis numquam et doloremque ducimus.",
+    "skills": [
+        "cooking",
+        "farming",
+        "programming"
+    ],
+    "hobbies": [
+        "playing pool",
+        "biking"
+    ],
+    "profession": "Professional Chef",
+    "profilePhoto": "https://publicdomainvectors.org/photos/generic-avatar.png",
+    "socialMediaLinks": [
+        {
+            "github": "https://mypublic.profile.site"
+        },
+        {
+            "linkedIn": "https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile"
+        }
+    ]
+}
