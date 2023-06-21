@@ -51,18 +51,19 @@ class ContactService {
     }
   }
 
-  //   async getUserById(userId) {
-  //     if (!ObjectId.isValid(userId)) return new Exception("Invalid User Id", 422);
+  async updateMyContact(contactId, contactData) {
+    try {
+      const result = await this.repository.findAndUpdateContact(
+        contactId,
+        contactData
+      );
 
-  //     try {
-  //       const result = await this.userRepository.findAndGetUser(userId);
-
-  //       return result;
-  //     } catch (err) {
-  //       console.log(err);
-  //       return new Exception("Unexpected Error", 500);
-  //     }
-  //   }
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
 }
 
 module.exports = ContactService;

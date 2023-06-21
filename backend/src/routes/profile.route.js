@@ -47,7 +47,7 @@ router.post("/user/:user_id", auth, validateProfile, async (req, res, next) => {
 /**
  *Update my Profile
  */
-router.put("/", auth, validateProfileUpdate, async (req, res, next) => {
+router.patch("/", auth, validateProfileUpdate, async (req, res, next) => {
   const profileController = new ProfileController();
 
   try {

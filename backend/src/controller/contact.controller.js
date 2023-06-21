@@ -53,19 +53,23 @@ class ContactController {
     }
     return res.status(200).json({ message: "Contact deleted.", data: result });
   }
-  // async getUserById(req, res) {
-  //   const mongooseInstance = req.app.get("mongooseInstance");
-  //   const userService = new UserService(new UserRepository(mongooseInstance));
 
-  //   const userId = req.query.id;
+  async updateMyContact(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const contactService = new ContactService(
+      new ContactRepository(mongooseInstance)
+    );
 
-  //   const result = await userService.getUserById(userId);
+    const contactData = req.body;
+    const contactId = req.query.contact_id;
 
-  //   if (result instanceof Exception) {
-  //     return res.status(result.code).json({ message: result.message });
-  //   }
-  //   return res.status(200).json({ message: "Success", data: result });
-  // }
+    const result = await contactService.updateMyContact(contactId, contactData);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(200).json({ message: "Contact updated.", data: result });
+  }
 }
 
 module.exports = ContactController;

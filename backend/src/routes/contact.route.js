@@ -1,11 +1,13 @@
 var express = require("express");
 var router = express.Router();
 
-const validateContact = require("../middleware/contact.validation");
+const {
+  validateContact,
+  validateContactUpdate,
+} = require("../middleware/contact.validation");
 const auth = require("../middleware/auth");
 
 const ContactController = require("../controller/contact.controller");
-const Contact = require("../model/contact.model");
 
 // test api
 router.get("/test", (req, res) => {
@@ -53,6 +55,21 @@ router.delete("/delete", auth, async (req, res, next) => {
 
   try {
     const result = await contactController.deleteAContact(req, res);
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+});
+
+/**
+ *Update my Profile
+ */
+router.patch("/update", auth, validateContactUpdate, async (req, res, next) => {
+  const contactController = new ContactController();
+
+  try {
+    const result = await contactController.updateMyContact(req, res);
     return res.json(result);
   } catch (error) {
     // Pass the error to the error handling middleware

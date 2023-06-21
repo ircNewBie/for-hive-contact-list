@@ -70,20 +70,23 @@ class ContactRepository {
     }
   }
 
-  //   async findAndUpdateUserRole(userData) {
-  //     try {
-  //       const updatedUser = await this.User.findByIdAndUpdate(
-  //         userData.user_id,
-  //         { $set: userData },
-  //         { new: true }
-  //       );
+  async findAndUpdateContact(contactId, contactData) {
+    console.log(contactId);
+    console.log(contactData);
 
-  //       return updatedUser;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       return new Exception("Failed to update user role", 400);
-  //     }
-  //   }
+    try {
+      const updatedContact = await this.Contact.findByIdAndUpdate(
+        contactId,
+        { $set: contactData },
+        { new: true }
+      );
+
+      return updatedContact;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to update contact.", 400);
+    }
+  }
 
   //   async findAndUpdateUserProfile(userData, profileData) {
   //     const userId = userData.userId;

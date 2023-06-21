@@ -1,4 +1,8 @@
 const Contact = require("../model/contact.model");
+const User = require("../model/user.model");
+
+const ObjectId = require("mongoose").Types.ObjectId;
+
 const Joi = require("joi");
 
 const payloadSchema = Joi.object({
@@ -35,24 +39,28 @@ const validateContact = async (req, res, next) => {
   next();
 };
 
-// const validateProfileUpdate = async (req, res, next) => {
-//   // Perform of payload validations
-//   const currentUserId = req.user._id;
+const validateContactUpdate = async (req, res, next) => {
+  const currentUserId = req.user._id;
+  const contactId = req.query.contact_id;
 
-//   const { error } = payloadSchema.validate(req.body);
-//   if (error) {
-//     return res.status(422).json({ message: error.details[0].message });
-//   }
+  const { error } = payloadSchema.validate(req.body);
+  if (error) {
+    return res.status(422).json({ message: error.details[0].message });
+  }
 
-//   const profileExists = await Profile.findOne({ userId: currentUserId });
-//   if (!profileExists) {
-//     return res
-//       .status(422)
-//       .json({ message: "Profile does not exist. Create one first" });
-//   }
+  if (!ObjectId.isValid(contactId))
+    return res.status(422).json({ message: "Invalid Contact Id" });
 
-//   // Validation successful, proceed to the next middleware or route handler
-//   next();
-// };
+  const currentUser = await User.findById(currentUserId);
 
-module.exports = validateContact;
+  if (!currentUser.contacts.includes(contactId)) {
+    return res
+      .status(404)
+      .json({ message: "Contact not found in your contact list." });
+  }
+
+  // Validation successful
+  next();
+};
+
+module.exports = { validateContact, validateContactUpdate };
