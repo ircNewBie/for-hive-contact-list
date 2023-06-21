@@ -21,16 +21,18 @@ class ContactService {
     }
   }
 
-  //   async getAllUsers() {
-  //     try {
-  //       const result = await this.repository.findAndGetAllUsers();
+  async getAllContacts(currentUser) {
+    try {
+      const result = await this.repository.findAndGetAllCurrentUserContacts(
+        currentUser
+      );
 
-  //       return result;
-  //     } catch (err) {
-  //       console.log(err);
-  //       return new Exception("Unexpected Error", 500);
-  //     }
-  //   }
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
 
   //   async getUserById(userId) {
   //     if (!ObjectId.isValid(userId)) return new Exception("Invalid User Id", 422);

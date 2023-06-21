@@ -20,16 +20,20 @@ class ContactController {
       .json({ message: "Contact created successfully", data: result });
   }
 
-  // async getAllUsers(req, res) {
-  //   const mongooseInstance = req.app.get("mongooseInstance");
-  //   const userService = new UserService(new UserRepository(mongooseInstance));
-  //   const result = await userService.getAllUsers();
+  async getAllContacts(req, res) {
+    const currentUser = req.user;
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const contactService = new ContactService(
+      new ContactRepository(mongooseInstance)
+    );
 
-  //   if (result instanceof Exception) {
-  //     return res.status(result.code).json({ message: result.message });
-  //   }
-  //   return res.status(200).json({ message: "Success", data: result });
-  // }
+    const result = await contactService.getAllContacts(currentUser);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(200).json({ message: "Success", data: result });
+  }
 
   // async getUserById(req, res) {
   //   const mongooseInstance = req.app.get("mongooseInstance");

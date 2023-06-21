@@ -35,18 +35,21 @@ class ContactRepository {
       return new Exception("Unexpected Error! Failed to create contact", 400);
     }
   }
-  //   async findAndGetAllUsers() {
-  //     try {
-  //       const result = await this.User.find({})
-  //         .populate("profile")
-  //         .select("-password  -__v");
 
-  //       return result;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       return new Exception("Failed to retrieve users", 400);
-  //     }
-  //   }
+  async findAndGetAllCurrentUserContacts(currentUser) {
+    try {
+      const thisUser = await User.findById(currentUser._id);
+      const result = await this.Contact.find({
+        _id: { $in: thisUser.contacts },
+      }).select("-createdBy -__v");
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to retrieve users", 400);
+    }
+  }
+
   //   async findAndGetUser(userId) {
   //     try {
   //       const result = await this.User.findById(userId)

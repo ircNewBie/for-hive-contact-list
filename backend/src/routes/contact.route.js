@@ -16,7 +16,6 @@ router.get("/test", (req, res) => {
  * Contacts Related Endpoints
  */
 /* POST create contact */
-
 router.post("/create", auth, validateContact, async (req, res, next) => {
   const contactController = new ContactController();
 
@@ -31,49 +30,20 @@ router.post("/create", auth, validateContact, async (req, res, next) => {
 });
 
 /**
- * User Login
+ * GET all contacts
  */
-// router.post("/login", async (req, res, next) => {
-//   try {
-//     const user = await User.findOne({ email: req.body.email });
+router.get("/all", auth, async (req, res, next) => {
+  const contactController = new ContactController();
 
-//     if (!user) {
-//       console.log("Invalid / incorrect Email address");
-//       return res.status(401).json({ message: "Invalid Credentials" });
-//     }
-//     const match = await bcrypt.compare(req.body.password, user.password);
+  try {
+    const result = await contactController.getAllContacts(req, res);
 
-//     const accessToken = jwt.sign(
-//       JSON.stringify(user),
-//       process.env.TOKEN_SECRET
-//     );
-
-//     if (match) {
-//       user.password = undefined;
-//       return res.json({ accessToken, user });
-//     } else {
-//       return res.status(401).json({ message: "Invalid Credentials" });
-//     }
-//   } catch (e) {
-//     console.log(e);
-//     next(error);
-//   }
-// });
-
-/**
- * GET all users
- */
-// router.get("/all", auth, async (req, res, next) => {
-//   const userController = new UserController();
-
-//   try {
-//     const result = await userController.getAllUsers(req, res);
-//     return res.json(result);
-//   } catch (error) {
-//     // Pass the error to the error handling middleware
-//     next(error);
-//   }
-// });
+    return res.json(result);
+  } catch (error) {
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+});
 
 /**
  * GET user by id
