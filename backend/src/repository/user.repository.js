@@ -11,6 +11,25 @@ class UserRepository {
     );
   }
 
+  async sendAddFriendInvite(requestedBy, sendRequestTo) {
+    try {
+      const userToAddFriend = await this.User.findById(sendRequestTo);
+      const request = await userToAddFriend.addToPendingFriends(
+        requestedBy._id
+      );
+
+      const result = {
+        status: "Invited",
+        name: request.fullName,
+      };
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to send invite ", 500);
+    }
+  }
+
   async createUser(userData) {
     try {
       let user = new this.User(userData);
@@ -25,6 +44,7 @@ class UserRepository {
       return new Exception("Failed to create user", 500);
     }
   }
+
   async findAndGetAllUsers() {
     try {
       const result = await this.User.find({})

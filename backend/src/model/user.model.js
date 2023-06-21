@@ -75,6 +75,21 @@ userSchema.methods.shareContact = async function (contactId) {
   }
 };
 
+/**
+ *
+ * @param {*} contactId
+ * @returns user
+ */
+userSchema.methods.addToPendingFriends = async function (userId) {
+  try {
+    this.pendingFriends.push(userId);
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Create the User model from the User schema
 const User = mongoose.model("User", userSchema);
 

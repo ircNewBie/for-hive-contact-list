@@ -7,6 +7,25 @@ class UserService {
     this.userRepository = userRepository;
   }
 
+  async addFriend(req, res) {
+    const sendRequestTo = req.query.user_id;
+    const requestedBy = req.user;
+
+    console.log(sendRequestTo, requestedBy);
+
+    try {
+      const result = await this.userRepository.sendAddFriendInvite(
+        requestedBy,
+        sendRequestTo
+      );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
   async createUser(req, res) {
     const userData = req.body;
 

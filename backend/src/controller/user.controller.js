@@ -3,6 +3,20 @@ const UserService = require("../service/user.service");
 const UserRepository = require("../repository/user.repository");
 
 class UserController {
+  async addFriend(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const userService = new UserService(new UserRepository(mongooseInstance));
+
+    const result = await userService.addFriend(req, res);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res
+      .status(201)
+      .json({ message: "Friend request  successful!", data: result });
+  }
+
   async signup(req, res) {
     const mongooseInstance = req.app.get("mongooseInstance");
     const userService = new UserService(new UserRepository(mongooseInstance));
