@@ -1,5 +1,4 @@
 const Exception = require("../utils/error.handler");
-const UserService = require("../service/user.service");
 const ContactService = require("../service/contact.service");
 const ContactRepository = require("../repository/contact.repository");
 
@@ -69,6 +68,26 @@ class ContactController {
       return res.status(result.code).json({ message: result.message });
     }
     return res.status(200).json({ message: "Contact updated.", data: result });
+  }
+
+  async shareContactToFriend(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const contactService = new ContactService(
+      new ContactRepository(mongooseInstance)
+    );
+
+    const contactId = req.query.contact_id;
+    const friendId = req.query.friend_id;
+
+    const result = await contactService.shareContactToFriend(
+      friendId,
+      contactId
+    );
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(200).json({ message: "Contact shared.", data: result });
   }
 }
 

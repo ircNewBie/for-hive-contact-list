@@ -1,5 +1,5 @@
 const contactModel = require("../model/contact.model");
-const User = require("../model/user.model");
+const userModel = require("../model/user.model");
 
 const Exception = require("../utils/error.handler");
 
@@ -9,6 +9,7 @@ class ContactRepository {
       contactModel.modelName,
       contactModel.schema
     );
+    this.User = mongooseInstance.model(userModel.modelName, userModel.schema);
   }
 
   async createContact(contactData) {
@@ -21,7 +22,7 @@ class ContactRepository {
       }
 
       // update user's contacts.
-      const thisUser = await User.findById(contactData.createdBy);
+      const thisUser = await this.User.findById(contactData.createdBy);
 
       const updateUserContacts = await thisUser.addContact(savedContact._id);
       console.log(updateUserContacts);
@@ -32,13 +33,13 @@ class ContactRepository {
       return contact;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Unexpected Error! Failed to create contact", 400);
+      return new Exception("Unexpected Error! Failed to create contact", 500);
     }
   }
 
   async findAndGetAllCurrentUserContacts(currentUser) {
     try {
-      const thisUser = await User.findById(currentUser._id);
+      const thisUser = await this.User.findById(currentUser._id);
       const result = await this.Contact.find({
         _id: { $in: thisUser.contacts },
       }).select("-createdBy -__v");
@@ -46,13 +47,13 @@ class ContactRepository {
       return result;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to retrieve users", 400);
+      return new Exception("Failed to retrieve users", 500);
     }
   }
 
   async findAndDeleteCurrentUserContact(currentUser, contactToDelete) {
     try {
-      const thisUser = await User.findById(currentUser._id);
+      const thisUser = await this.User.findById(currentUser._id);
 
       // remove the contact id from the user's contacts array
       await thisUser.removeAContact(contactToDelete);
@@ -66,14 +67,11 @@ class ContactRepository {
       return result;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to delete contact", 400);
+      return new Exception("Failed to delete contact", 500);
     }
   }
 
   async findAndUpdateContact(contactId, contactData) {
-    console.log(contactId);
-    console.log(contactData);
-
     try {
       const updatedContact = await this.Contact.findByIdAndUpdate(
         contactId,
@@ -84,63 +82,26 @@ class ContactRepository {
       return updatedContact;
     } catch (err) {
       console.log("err", err);
-      return new Exception("Failed to update contact.", 400);
+      return new Exception("Failed to update contact.", 500);
     }
   }
 
-  //   async findAndUpdateUserProfile(userData, profileData) {
-  //     const userId = userData.userId;
-  //     let updatedProfile = {};
-  //     let updatedUser = {};
+  async findContactAndShareToMyFriend(friendId, contactId) {
+    try {
+      const myFriend = await this.User.findById(friendId);
 
-  //     const user = await this.User.findById(userId);
+      const result = await myFriend.shareContact(contactId);
+      console.log("result", result);
 
-  //     if (!user) {
-  //       return new Exception("User not found", 404);
-  //     }
-
-  //     const profileExists = await this.Profile.findOne({
-  //       userId: userId,
-  //     });
-
-  //     try {
-  //       // update profile if it exists and create  otherwise
-  //       if (profileExists) {
-  //         const profileId = profileExists._id;
-
-  //         updatedProfile = await this.Profile.findByIdAndUpdate(
-  //           profileId,
-  //           { $set: profileData },
-  //           { new: true }
-  //         );
-  //       } else {
-  //         profileData.userId = userId;
-
-  //         const newProfile = new this.Profile(profileData);
-  //         updatedProfile = await newProfile.save();
-  //         userData.profile = updatedProfile._id;
-  //       }
-
-  //       updatedUser = await this.User.findByIdAndUpdate(
-  //         userData.userId,
-  //         { $set: userData },
-  //         { new: true }
-  //       )
-  //         .select("-password -friends -pendingFriends -contacts -__v")
-  //         .populate({
-  //           path: "profile",
-  //           select: "-_id -userId -__v",
-  //         });
-
-  //       return updatedUser;
-  //     } catch (err) {
-  //       console.log("err", err);
-  //       return new Exception(
-  //         "Unexpected error! Failed to update user profile",
-  //         400
-  //       );
-  //     }
-  //   }
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception(
+        "Unexpected error! Failed to share your contact.",
+        500
+      );
+    }
+  }
 }
 
 module.exports = ContactRepository;

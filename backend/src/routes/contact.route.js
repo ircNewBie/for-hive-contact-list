@@ -63,7 +63,7 @@ router.delete("/delete", auth, async (req, res, next) => {
 });
 
 /**
- *Update my Profile
+ *Update my Contact
  */
 router.patch("/update", auth, validateContactUpdate, async (req, res, next) => {
   const contactController = new ContactController();
@@ -76,5 +76,25 @@ router.patch("/update", auth, validateContactUpdate, async (req, res, next) => {
     next(error);
   }
 });
+
+/**
+ *  Share contact
+ */
+router.post(
+  "/share",
+  auth,
+  // validateContactShare,
+  async (req, res, next) => {
+    const contactController = new ContactController();
+
+    try {
+      const result = await contactController.shareContactToFriend(req, res);
+      return res.json(result);
+    } catch (error) {
+      // Pass the error to the error handling middleware
+      next(error);
+    }
+  }
+);
 
 module.exports = router;

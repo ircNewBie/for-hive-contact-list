@@ -64,6 +64,26 @@ class ContactService {
       return new Exception("Unexpected Error", 500);
     }
   }
+
+  /**
+   * Share my contact to friend
+   * @param {*} friendId
+   * @param {*} contactId
+   * @returns
+   */
+  async shareContactToFriend(friendId, contactId) {
+    try {
+      const result = await this.repository.findContactAndShareToMyFriend(
+        friendId,
+        contactId
+      );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
 }
 
 module.exports = ContactService;

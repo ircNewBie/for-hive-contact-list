@@ -17,9 +17,16 @@ const userSchema = new mongoose.Schema({
     ],
     default: USER_ROLE.USER,
   },
-  contacts: [{ type: String }],
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  pendingFriends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  sharedContacts: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Contact", default: [] },
+  ],
+  contacts: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Contact", default: [] },
+  ],
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] }],
+  pendingFriends: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] },
+  ],
   profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
 });
 
@@ -46,6 +53,21 @@ userSchema.methods.addContact = async function (contactId) {
 userSchema.methods.removeAContact = async function (contactIdToRemove) {
   try {
     this.contacts = this.contacts.filter((id) => id !== contactIdToRemove);
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ *
+ * @param {*} contactId
+ * @returns user
+ */
+userSchema.methods.shareContact = async function (contactId) {
+  try {
+    this.sharedContacts.push(contactId);
     await this.save();
     return this;
   } catch (error) {
