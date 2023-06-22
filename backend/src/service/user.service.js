@@ -11,13 +11,30 @@ class UserService {
     const sendRequestTo = req.query.user_id;
     const requestedBy = req.user;
 
-    console.log(sendRequestTo, requestedBy);
-
     try {
       const result = await this.userRepository.sendAddFriendInvite(
         requestedBy,
         sendRequestTo
       );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
+  async acceptFriend(req, res) {
+    const sendRequestFrom = req.query.user_id;
+    const mySelf = req.user;
+
+    try {
+      const result = await this.userRepository.acceptFriendInvite(
+        mySelf,
+        sendRequestFrom
+      );
+
+      // const result = "from service";
 
       return result;
     } catch (err) {

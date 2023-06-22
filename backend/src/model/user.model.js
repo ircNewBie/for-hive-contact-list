@@ -90,6 +90,42 @@ userSchema.methods.addToPendingFriends = async function (userId) {
   }
 };
 
+userSchema.methods.acceptPendingFriend = async function (userIdToBeAccepted) {
+  try {
+    // Remove from pending friends
+    this.pendingFriends = this.pendingFriends.filter(
+      (userId) => userId !== userIdToBeAccepted
+    );
+    // Add to friends
+    if (!this.friends.includes(userIdToBeAccepted))
+      this.friends.push(userIdToBeAccepted);
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.methods.denyPendingFriend = async function (userIdToBeDenied) {
+  try {
+    // Remove from pending friends
+    this.pendingFriends = this.pendingFriends.filter(
+      (userId) => userId !== userIdToBeDenied
+    );
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.methods.getFriends = async function () {
+  return this.model("User")
+    .find({
+      _id: { $in: this.friends },
+    })
+    .exec();
+};
 // Create the User model from the User schema
 const User = mongoose.model("User", userSchema);
 

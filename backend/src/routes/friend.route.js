@@ -2,7 +2,10 @@ var express = require("express");
 var router = express.Router();
 
 const auth = require("../middleware/auth");
-const { validateRequestToAdd } = require("../middleware/friend.validation");
+const {
+  validateRequestToAdd,
+  validateAcceptOrDenyFriend,
+} = require("../middleware/friend.validation");
 
 const UserController = require("../controller/user.controller");
 const User = require("../model/user.model");
@@ -32,58 +35,35 @@ router.post("/invite", auth, validateRequestToAdd, async (req, res, next) => {
 /**
  * User accept friend request
  */
-router.post("/accept", async (req, res, next) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
+router.post(
+  "/accept",
+  auth,
+  validateAcceptOrDenyFriend,
+  async (req, res, next) => {
+    const userController = new UserController();
 
-    if (!user) {
-      console.log("Invalid / incorrect Email address");
-      return res.status(401).json({ message: "Invalid Credentials" });
+    try {
+      const result = await userController.acceptFriendRequest(req, res);
+
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
-    const match = await bcrypt.compare(req.body.password, user.password);
-
-    const accessToken = jwt.sign(
-      JSON.stringify(user),
-      process.env.TOKEN_SECRET
-    );
-
-    if (match) {
-      user.password = undefined;
-      return res.json({ accessToken, user });
-    } else {
-      return res.status(401).json({ message: "Invalid Credentials" });
-    }
-  } catch (e) {
-    console.log(e);
-    next(error);
   }
-});
+);
 /**
  * User rejects friend request
  */
-router.post("/reject", async (req, res, next) => {
+router.post("/reject", auth, async (req, res, next) => {
+  const userController = new UserController();
+
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const result = await userController.acceptFriendRequest(req, res);
 
-    if (!user) {
-      console.log("Invalid / incorrect Email address");
-      return res.status(401).json({ message: "Invalid Credentials" });
-    }
-    const match = await bcrypt.compare(req.body.password, user.password);
-
-    const accessToken = jwt.sign(
-      JSON.stringify(user),
-      process.env.TOKEN_SECRET
-    );
-
-    if (match) {
-      user.password = undefined;
-      return res.json({ accessToken, user });
-    } else {
-      return res.status(401).json({ message: "Invalid Credentials" });
-    }
-  } catch (e) {
-    console.log(e);
+    return res.json(result);
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 });
