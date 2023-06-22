@@ -79,8 +79,8 @@ The Contact List App utilizes RESTful API endpoints for data exchange between th
 - Friend Management:
   - [x] POST    /api/friends/invite: Sends a friend invitation to another user.
   - [x] POST    /api/friends/accept: Accepts a friend request.
-  - [ ] POST    /api/friends/reject: Rejects a friend request.
-  - [ ] GET     /api/friends/list: Retrieves a user's friend list.
+  - [x] POST    /api/friends/reject: Rejects a friend request.
+  - [x] GET     /api/friends/list: Retrieves a user's friend list.
 
 - Admin Panel:
   - [x] PATCH   /api/admin/user-profile/:id: Updates a user's profile information.

@@ -60,6 +60,21 @@ class UserService {
     }
   }
 
+  //
+
+  async getAllMyFriends(req, res) {
+    const mySelf = req.user;
+
+    try {
+      const result = await this.userRepository.findAndGetAllMyFriends(mySelf);
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
   async createUser(req, res) {
     const userData = req.body;
 

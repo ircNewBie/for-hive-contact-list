@@ -79,7 +79,7 @@ router.get("/all", auth, async (req, res, next) => {
   const userController = new UserController();
 
   try {
-    const result = await userController.getAllUsers(req, res);
+    const result = await userController.getAllMyFriends(req, res);
     return res.json(result);
   } catch (error) {
     // Pass the error to the error handling middleware
@@ -88,3 +88,4 @@ router.get("/all", auth, async (req, res, next) => {
 });
 
 module.exports = router;
+// eager21earn;

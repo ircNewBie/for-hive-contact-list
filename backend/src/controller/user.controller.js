@@ -20,7 +20,7 @@ class UserController {
       return res.status(result.code).json({ message: result.message });
     }
     return res
-      .status(201)
+      .status(200)
       .json({ message: "Friend request  successful!", data: result });
   }
 
@@ -41,7 +41,7 @@ class UserController {
       return res.status(result.code).json({ message: result.message });
     }
     return res
-      .status(201)
+      .status(200)
       .json({ message: "Friend request  accepted!", data: result });
   }
 
@@ -55,10 +55,34 @@ class UserController {
       return res.status(result.code).json({ message: result.message });
     }
     return res
-      .status(201)
+      .status(200)
       .json({ message: "Friend request  rejected!", data: result });
   }
 
+  /**
+   * retrieve all friends of the current logged in user
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async getAllMyFriends(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const userService = new UserService(new UserRepository(mongooseInstance));
+
+    const result = await userService.getAllMyFriends(req, res);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res.status(200).json({ message: "Friends", data: result });
+  }
+
+  /**
+   * User Signup and registration
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
   async signup(req, res) {
     const mongooseInstance = req.app.get("mongooseInstance");
     const userService = new UserService(new UserRepository(mongooseInstance));

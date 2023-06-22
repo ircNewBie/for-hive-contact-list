@@ -133,6 +133,9 @@ userSchema.methods.getFriends = async function () {
     .find({
       _id: { $in: this.friends },
     })
+    .select(
+      "  -role -friends  -password -contacts -sharedContacts -pendingFriends -__v"
+    )
     .exec();
 };
 // Create the User model from the User schema

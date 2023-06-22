@@ -66,6 +66,20 @@ class UserRepository {
     }
   }
 
+  //
+
+  async findAndGetAllMyFriends(mySelf) {
+    try {
+      mySelf = await this.User.findById(mySelf._id);
+      const result = await mySelf.getFriends();
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to respond to the invite ", 500);
+    }
+  }
+
   async createUser(userData) {
     try {
       let user = new this.User(userData);
