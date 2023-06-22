@@ -75,6 +75,69 @@ userSchema.methods.shareContact = async function (contactId) {
   }
 };
 
+/**
+ *
+ * @param {*} contactId
+ * @returns user
+ */
+userSchema.methods.addToPendingFriends = async function (userId) {
+  try {
+    this.pendingFriends.push(userId);
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.methods.acceptPendingFriend = async function (userIdToBeAccepted) {
+  try {
+    // Remove from pending friends
+    this.pendingFriends = this.pendingFriends.filter(
+      (userId) => userId != userIdToBeAccepted
+    );
+    // Add to friends
+    if (!this.friends.includes(userIdToBeAccepted))
+      this.friends.push(userIdToBeAccepted);
+    await this.save();
+    const myNewFriend = await this.model("User")
+      .findById(userIdToBeAccepted)
+      .exec();
+
+    console.log("from user method: ", myNewFriend);
+
+    await myNewFriend.friends.push(this._id);
+    await myNewFriend.save();
+
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.methods.rejectPendingFriend = async function (userIdToBeDenied) {
+  try {
+    // Remove from pending friends
+    this.pendingFriends = this.pendingFriends.filter(
+      (userId) => userId != userIdToBeDenied
+    );
+    await this.save();
+    return this;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.methods.getFriends = async function () {
+  return this.model("User")
+    .find({
+      _id: { $in: this.friends },
+    })
+    .select(
+      "  -role -friends  -password -contacts -sharedContacts -pendingFriends -__v"
+    )
+    .exec();
+};
 // Create the User model from the User schema
 const User = mongoose.model("User", userSchema);
 

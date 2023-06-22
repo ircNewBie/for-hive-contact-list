@@ -7,6 +7,74 @@ class UserService {
     this.userRepository = userRepository;
   }
 
+  async addFriend(req, res) {
+    const sendRequestTo = req.query.user_id;
+    const requestedBy = req.user;
+
+    try {
+      const result = await this.userRepository.sendAddFriendInvite(
+        requestedBy,
+        sendRequestTo
+      );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
+  async acceptFriend(req, res) {
+    const sendRequestFrom = req.query.user_id;
+    const mySelf = req.user;
+
+    try {
+      const result = await this.userRepository.acceptFriendInvite(
+        mySelf,
+        sendRequestFrom
+      );
+
+      // const result = "from service";
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
+  async rejectFriend(req, res) {
+    const sendRequestFrom = req.query.user_id;
+    const mySelf = req.user;
+
+    try {
+      const result = await this.userRepository.rejectFriendInvite(
+        mySelf,
+        sendRequestFrom
+      );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
+  //
+
+  async getAllMyFriends(req, res) {
+    const mySelf = req.user;
+
+    try {
+      const result = await this.userRepository.findAndGetAllMyFriends(mySelf);
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
   async createUser(req, res) {
     const userData = req.body;
 
