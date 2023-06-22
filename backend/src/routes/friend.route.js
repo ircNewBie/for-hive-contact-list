@@ -55,18 +55,23 @@ router.post(
 /**
  * User rejects friend request
  */
-router.post("/reject", auth, async (req, res, next) => {
-  const userController = new UserController();
+router.post(
+  "/reject",
+  auth,
+  validateAcceptOrDenyFriend,
+  async (req, res, next) => {
+    const userController = new UserController();
 
-  try {
-    const result = await userController.acceptFriendRequest(req, res);
+    try {
+      const result = await userController.rejectFriendRequest(req, res);
 
-    return res.json(result);
-  } catch (error) {
-    console.log(error);
-    next(error);
+      return res.json(result);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
   }
-});
+);
 /**
  * GET friends
  */

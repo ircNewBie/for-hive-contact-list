@@ -43,6 +43,23 @@ class UserService {
     }
   }
 
+  async rejectFriend(req, res) {
+    const sendRequestFrom = req.query.user_id;
+    const mySelf = req.user;
+
+    try {
+      const result = await this.userRepository.rejectFriendInvite(
+        mySelf,
+        sendRequestFrom
+      );
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      return new Exception("Unexpected Error", 500);
+    }
+  }
+
   async createUser(req, res) {
     const userData = req.body;
 

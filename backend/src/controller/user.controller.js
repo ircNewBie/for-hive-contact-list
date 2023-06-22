@@ -45,6 +45,20 @@ class UserController {
       .json({ message: "Friend request  accepted!", data: result });
   }
 
+  async rejectFriendRequest(req, res) {
+    const mongooseInstance = req.app.get("mongooseInstance");
+    const userService = new UserService(new UserRepository(mongooseInstance));
+
+    const result = await userService.rejectFriend(req, res);
+
+    if (result instanceof Exception) {
+      return res.status(result.code).json({ message: result.message });
+    }
+    return res
+      .status(201)
+      .json({ message: "Friend request  rejected!", data: result });
+  }
+
   async signup(req, res) {
     const mongooseInstance = req.app.get("mongooseInstance");
     const userService = new UserService(new UserRepository(mongooseInstance));

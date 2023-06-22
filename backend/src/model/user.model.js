@@ -94,23 +94,32 @@ userSchema.methods.acceptPendingFriend = async function (userIdToBeAccepted) {
   try {
     // Remove from pending friends
     this.pendingFriends = this.pendingFriends.filter(
-      (userId) => userId !== userIdToBeAccepted
+      (userId) => userId != userIdToBeAccepted
     );
     // Add to friends
     if (!this.friends.includes(userIdToBeAccepted))
       this.friends.push(userIdToBeAccepted);
     await this.save();
+    const myNewFriend = await this.model("User")
+      .findById(userIdToBeAccepted)
+      .exec();
+
+    console.log("from user method: ", myNewFriend);
+
+    await myNewFriend.friends.push(this._id);
+    await myNewFriend.save();
+
     return this;
   } catch (error) {
     throw error;
   }
 };
 
-userSchema.methods.denyPendingFriend = async function (userIdToBeDenied) {
+userSchema.methods.rejectPendingFriend = async function (userIdToBeDenied) {
   try {
     // Remove from pending friends
     this.pendingFriends = this.pendingFriends.filter(
-      (userId) => userId !== userIdToBeDenied
+      (userId) => userId != userIdToBeDenied
     );
     await this.save();
     return this;

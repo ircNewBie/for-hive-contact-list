@@ -48,6 +48,24 @@ class UserRepository {
     }
   }
 
+  async rejectFriendInvite(mySelf, sendRequestFrom) {
+    try {
+      mySelf = await this.User.findById(mySelf._id);
+      await mySelf.rejectPendingFriend(sendRequestFrom);
+
+      const newFriend = await this.User.findById(sendRequestFrom);
+      const result = {
+        status: "Rejected!",
+        name: newFriend.fullName,
+      };
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to respond to the invite ", 500);
+    }
+  }
+
   async createUser(userData) {
     try {
       let user = new this.User(userData);
