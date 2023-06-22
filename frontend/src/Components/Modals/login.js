@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Button, message } from "antd";
+import { Modal, Form, Input, Button } from "antd";
 
 import useLogin from "../Hooks/useLogin";
 
 const LoginModal = () => {
+  const { mutate: login, isLoading, error } = useLogin();
+
   const [loginData, setLoginData] = useState(null);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
 
-  const { mutate: login, isLoading, error } = useLogin();
-
   const onFinish = async (values) => {
     try {
-      await login(values);
       hideModal();
-      // setLoginData
+      setLoginData(await login(values));
     } catch (error) {
       console.error("Login failed:", error);
     }
