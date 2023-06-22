@@ -18,11 +18,13 @@ const userRouter = require("./src/routes/user.route");
 const profileRouter = require("./src/routes/profile.route");
 const adminRouter = require("./src/routes/admin.route");
 const contactRouter = require("./src/routes/contact.route");
+const friendRouter = require("./src/routes/friend.route");
 
 app.use("/api/user", userRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/contact", contactRouter);
+app.use("/api/friends", friendRouter);
 
 // Test route ----------------------------------------
 app.get("/", (req, res) => {

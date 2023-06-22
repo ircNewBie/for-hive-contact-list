@@ -11,6 +11,75 @@ class UserRepository {
     );
   }
 
+  async sendAddFriendInvite(requestedBy, sendRequestTo) {
+    try {
+      const userToAddFriend = await this.User.findById(sendRequestTo);
+      const request = await userToAddFriend.addToPendingFriends(
+        requestedBy._id
+      );
+
+      const result = {
+        status: "Invited",
+        name: request.fullName,
+      };
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to send invite ", 500);
+    }
+  }
+
+  async acceptFriendInvite(mySelf, sendRequestFrom) {
+    try {
+      mySelf = await this.User.findById(mySelf._id);
+      await mySelf.acceptPendingFriend(sendRequestFrom);
+
+      const newFriend = await this.User.findById(sendRequestFrom);
+      const result = {
+        status: "Accepted",
+        name: newFriend.fullName,
+      };
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to send invite ", 500);
+    }
+  }
+
+  async rejectFriendInvite(mySelf, sendRequestFrom) {
+    try {
+      mySelf = await this.User.findById(mySelf._id);
+      await mySelf.rejectPendingFriend(sendRequestFrom);
+
+      const newFriend = await this.User.findById(sendRequestFrom);
+      const result = {
+        status: "Rejected!",
+        name: newFriend.fullName,
+      };
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to respond to the invite ", 500);
+    }
+  }
+
+  //
+
+  async findAndGetAllMyFriends(mySelf) {
+    try {
+      mySelf = await this.User.findById(mySelf._id);
+      const result = await mySelf.getFriends();
+
+      return result;
+    } catch (err) {
+      console.log("err", err);
+      return new Exception("Failed to respond to the invite ", 500);
+    }
+  }
+
   async createUser(userData) {
     try {
       let user = new this.User(userData);
@@ -25,6 +94,7 @@ class UserRepository {
       return new Exception("Failed to create user", 500);
     }
   }
+
   async findAndGetAllUsers() {
     try {
       const result = await this.User.find({})
