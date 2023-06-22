@@ -100,7 +100,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n  \"email\": \"testuser@admin.com\",\n  \"password\": \"admin\",\n  \"confirm_password\": \"admin\",\n  \"fullName\": \"Root Admin2\",\n  \"contactNumber\": \"099999999\",\n  \"completeAddress\": \"test address\"\n}",
+							"raw": " {\n  \"email\": \"user@email.com\",\n  \"password\": \"123456\",\n  \"confirm_password\": \"123456\",\n  \"fullName\": \"User \",\n  \"contactNumber\": \"099999999\",\n  \"completeAddress\": \"test address\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +147,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n  \"email\": \"elmo.villamante@hivegroupinc.com\",\n  \"password\": \"123456\"\n}",
+							"raw": " {\n  \"email\": \"root@admin.com\",\n  \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -995,6 +995,261 @@
 									"key": "contact_id",
 									"value": "6492b5de8f7c2bdd7aab9182"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Friends Management",
+			"item": [
+				{
+					"name": "Add Friend invite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \" Contact Three\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"0099999999\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/friends/invite?user_id=6493c5d7459d0df135cae1ff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"invite"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "6493c5d7459d0df135cae1ff"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Friend invite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \" Contact Three\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"0099999999\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/friends/accept?user_id=6493c5d7459d0df135cae1fc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"accept"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "6493c5d7459d0df135cae1fc"
+								},
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Friend invite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \" Contact Three\",\n    \"email\": \"contact.one@email.com\",\n    \"phone\": \"0099999999\",\n    \"address\": \"Contact One Address\",\n    \"aboutInfo\": \"About contact one bio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/friends/reject?user_id=6493c5d7459d0df135cae1ff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"reject"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "6493c5d7459d0df135cae1ff"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test friends uri",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/friends/test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All  my friends",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/friends/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"all"
 							]
 						}
 					},
