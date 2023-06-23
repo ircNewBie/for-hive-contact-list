@@ -1,37 +1,36 @@
 import * as reactQuery from "@tanstack/react-query";
-
+import { useState } from "react";
 import fetchData from "../../utils/fetch-be";
 
-const login = async (credentials) => {
-  const { data, isError } = reactQuery.useQuery({
-    queryKey: ["userLogin"],
-    queryFn: () => {
-      const loggedInUser = fetchData("POST", "/api/user/login", credentials);
-      return loggedInUser;
-    },
-  });
-
-  if (isError) {
-    throw new Error("Error");
-  }
-};
 const useLogin = () => {
   const queryClient = reactQuery.useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const userLogin = reactQuery.useMutation({
-    mutationFn: login,
+  const login = async (loginDetails) => {
+    return await fetchData("POST", "/api/user/login", loginDetails);
+  };
+
+  const mutation = reactQuery.useMutation(login, {
     onSuccess: (response) => {
-      // Invalidate relevant queries in the cache after successful login
       queryClient.invalidateQueries("userLogin");
-
-      // Pass the response object to the component
-      // You can perform any additional actions here
-      // For example, you can set the data in the component's state or trigger a callback function
-      // In this example, we're just logging the response
-      console.log("Login response:", response);
+      // Additional actions after successful login
     },
   });
-  return { mutate: login };
+
+  const handleLogin = async (loginDetails) => {
+    try {
+      setIsLoading(true);
+      await mutation.mutateAsync(loginDetails);
+      return loginDetails;
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { mutate: handleLogin, isLoading, error };
 };
 
 export default useLogin;
