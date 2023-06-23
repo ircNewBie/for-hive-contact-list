@@ -14,9 +14,10 @@ import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import useLogin from "../Hooks/useLogin";
 
 const LoginModal = () => {
-  const { mutate: login, isLoading, error } = useLogin();
+  const { mutate: login, isLoading } = useLogin();
 
   const [loginSuccess, setLoginSuccess] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -24,11 +25,11 @@ const LoginModal = () => {
   const onFinish = async (values) => {
     try {
       const loginData = await login(values);
-
       console.log("error value ", loginData);
 
-      if (loginData) {
+      if (loginData.accessToken) {
         setLoginSuccess(true);
+        setUserData(loginData);
         hideModal();
       }
     } catch (error) {
@@ -57,7 +58,7 @@ const LoginModal = () => {
       {loginSuccess && (
         <Space size={24} style={{ paddingRight: "20px" }}>
           <span style={{ color: "white", fontWeight: "bold" }}>
-            Welcome, {"My fullName"}
+            Welcome, {userData.user.fullName}
           </span>
           <Badge count={1}>
             <Avatar shape="square" icon={<UserOutlined />} />
@@ -72,6 +73,7 @@ const LoginModal = () => {
               icon={<LogoutOutlined />}
               onClick={() => {
                 setLoginSuccess(null);
+                setUserData(null);
               }}
             />
           </Tooltip>

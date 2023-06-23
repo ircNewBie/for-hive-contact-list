@@ -15,14 +15,15 @@ const useLogin = () => {
     onSuccess: (response) => {
       queryClient.invalidateQueries("userLogin");
       // Additional actions after successful login
+
+      return response;
     },
   });
 
   const handleLogin = async (loginDetails) => {
     try {
       setIsLoading(true);
-      await mutation.mutateAsync(loginDetails);
-      return loginDetails;
+      return await mutation.mutateAsync(loginDetails);
     } catch (error) {
       setError(error);
     } finally {
