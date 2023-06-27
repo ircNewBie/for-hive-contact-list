@@ -6,8 +6,9 @@ import axios from "axios";
 const isProduction = process.env.NODE_ENV === "production";
 const BASE_URL = isProduction ? API_URL_STAGING : API_URL_LOCAL;
 
-const RegistrationPage = ({ visible, onClose }) => {
+const RegistrationPage = () => {
   const [loading, setLoading] = useState(false);
+  const [showRegistration, setShowRegistration] = useState(true);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -30,12 +31,12 @@ const RegistrationPage = ({ visible, onClose }) => {
       // Check if the request was successful
       if (response.status === 201) {
         console.log("Registration successful!");
-
-        // Redirect the user to the login page
+        setShowRegistration(false);
         message.success(response.data.message);
       } else {
         console.log("Registration failed!");
-        console.log(response.data.message);
+        setShowRegistration(false);
+
         message.error(response.data.message);
       }
     } catch (error) {
@@ -47,8 +48,25 @@ const RegistrationPage = ({ visible, onClose }) => {
   };
 
   return (
-    <Drawer title="Registration" open={visible} onClose={onClose} width={400}>
-      <Form onFinish={onFinish} style={{ maxWidth: 300 }}>
+    <Drawer
+      title="New User Registration"
+      open={showRegistration}
+      onClose={() => {
+        setShowRegistration(false);
+      }}
+      bodyStyle={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+      style={{
+        maxWidth: 400,
+      }}>
+      <Form
+        onFinish={onFinish}
+        style={{
+          width: "100%",
+        }}>
         <Form.Item
           name="email"
           rules={[
@@ -62,6 +80,61 @@ const RegistrationPage = ({ visible, onClose }) => {
             },
           ]}>
           <Input placeholder="Email" />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your password",
+            },
+          ]}>
+          <Input.Password placeholder="Password" />
+        </Form.Item>
+
+        <Form.Item
+          name="confirm_password"
+          rules={[
+            {
+              required: true,
+              message: "Please re-enter your password",
+            },
+          ]}>
+          <Input.Password placeholder="Confirm password" />
+        </Form.Item>
+
+        <Form.Item
+          name="fullName"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your full name",
+            },
+          ]}>
+          <Input placeholder="Full Name" />
+        </Form.Item>
+
+        <Form.Item
+          name="contactNumber"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your contact number",
+            },
+          ]}>
+          <Input placeholder="Contact Number" />
+        </Form.Item>
+
+        <Form.Item
+          name="completeAddress"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your complete address",
+            },
+          ]}>
+          <Input placeholder="Complete Address" />
         </Form.Item>
 
         <Form.Item>

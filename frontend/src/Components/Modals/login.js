@@ -15,21 +15,21 @@ import RegistrationPage from "../Pages/signup";
 import useLogin from "../Hooks/useLogin";
 
 const LoginModal = () => {
-  const { mutate: login, isLoading } = useLogin();
-
-  const [loginSuccess, setLoginSuccess] = useState(null);
-  const [registerModalVisible, setRegisterModalVisible] = useState(false);
-
-  const [userData, setUserData] = useState(null);
-
-  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [form] = Form.useForm();
 
-  const handleRegisterClick = () => {
-    console.log("open registration");
+  const { mutate: login, isLoading } = useLogin();
+  const [loginSuccess, setLoginSuccess] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
 
+  const [registerModalVisible, setRegisterModalVisible] = useState(false);
+
+  const handleRegisterClick = () => {
     setRegisterModalVisible(true);
     setLoginModalVisible(false);
+    form.resetFields();
+    setLoginSuccess(null);
+    setUserData(null);
   };
 
   const onFinish = async (values) => {
@@ -54,6 +54,7 @@ const LoginModal = () => {
   };
 
   const hideModal = () => {
+    form.resetFields();
     setLoginModalVisible(false);
     form.resetFields();
   };
@@ -82,6 +83,7 @@ const LoginModal = () => {
               type="primary"
               icon={<LogoutOutlined />}
               onClick={() => {
+                window.location.reload();
                 setLoginSuccess(null);
                 setUserData(null);
               }}
@@ -142,12 +144,7 @@ const LoginModal = () => {
           </div>
         </Form>
       </Modal>
-      {registerModalVisible && (
-        <RegistrationPage
-          visible={registerModalVisible}
-          onClose={setRegisterModalVisible(false)}
-        />
-      )}
+      {registerModalVisible && <RegistrationPage />}
     </div>
   );
 };
