@@ -6,10 +6,9 @@ import { FooterComponent } from "./FooterComponent";
 import { HeaderComponent } from "./HeaderComponent";
 
 const AppLayout = () => {
-  const isLoggedIn = false;
   return (
     <Layout className="site-layout" style={{ minHeight: "100vh" }}>
-      <HeaderComponent isLoggedIn={isLoggedIn} />
+      <HeaderComponent />
       <Layout style={{ minHeight: "100%" }}>
         <Sidebar />
         <Layout style={{ minHeight: "100%" }}>

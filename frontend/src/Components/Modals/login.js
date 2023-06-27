@@ -61,23 +61,23 @@ const LoginModal = () => {
 
   return (
     <div>
+      {registerModalVisible && <RegistrationPage />}
+
       {!loginSuccess && (
         <Button type="primary" onClick={showLoginModal}>
           Log In
         </Button>
       )}
       {loginSuccess && (
-        <Space size={24} style={{ paddingRight: "20px" }}>
-          <span style={{ color: "white", fontWeight: "bold" }}>
-            Welcome, {userData.user.fullName}
-          </span>
-          <Badge count={1}>
-            <Avatar shape="square" icon={<UserOutlined />} />
-          </Badge>
-        </Space>
-      )}
-      {loginSuccess && (
-        <Space size={24}>
+        <>
+          <Space size={24} style={{ paddingRight: "20px" }}>
+            <span style={{ color: "white", fontWeight: "bold" }}>
+              Welcome, {userData.user.fullName}
+            </span>
+            <Badge count={1}>
+              <Avatar shape="square" icon={<UserOutlined />} />
+            </Badge>
+          </Space>
           <Tooltip title="Logout">
             <Button
               type="primary"
@@ -89,7 +89,7 @@ const LoginModal = () => {
               }}
             />
           </Tooltip>
-        </Space>
+        </>
       )}
 
       <Modal
@@ -144,7 +144,6 @@ const LoginModal = () => {
           </div>
         </Form>
       </Modal>
-      {registerModalVisible && <RegistrationPage />}
     </div>
   );
 };
