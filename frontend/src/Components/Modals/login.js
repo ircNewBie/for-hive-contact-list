@@ -11,16 +11,26 @@ import {
 } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
+import RegistrationPage from "../Pages/signup";
 import useLogin from "../Hooks/useLogin";
 
 const LoginModal = () => {
-  const { mutate: login, isLoading } = useLogin();
+  const [form] = Form.useForm();
 
+  const { mutate: login, isLoading } = useLogin();
   const [loginSuccess, setLoginSuccess] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
 
-  const [visible, setVisible] = useState(false);
-  const [form] = Form.useForm();
+  const [registerModalVisible, setRegisterModalVisible] = useState(false);
+
+  const handleRegisterClick = () => {
+    setRegisterModalVisible(true);
+    setLoginModalVisible(false);
+    form.resetFields();
+    setLoginSuccess(null);
+    setUserData(null);
+  };
 
   const onFinish = async (values) => {
     try {
@@ -38,20 +48,21 @@ const LoginModal = () => {
     }
   };
 
-  const showModal = () => {
+  const showLoginModal = () => {
     form.resetFields();
-    setVisible(true);
+    setLoginModalVisible(true);
   };
 
   const hideModal = () => {
-    setVisible(false);
+    form.resetFields();
+    setLoginModalVisible(false);
     form.resetFields();
   };
 
   return (
     <div>
       {!loginSuccess && (
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={showLoginModal}>
           Log In
         </Button>
       )}
@@ -72,6 +83,7 @@ const LoginModal = () => {
               type="primary"
               icon={<LogoutOutlined />}
               onClick={() => {
+                window.location.reload();
                 setLoginSuccess(null);
                 setUserData(null);
               }}
@@ -82,7 +94,7 @@ const LoginModal = () => {
 
       <Modal
         title="Login"
-        open={visible}
+        open={loginModalVisible}
         onCancel={hideModal}
         destroyOnClose={true}
         footer={null}>
@@ -97,7 +109,6 @@ const LoginModal = () => {
             ]}>
             <Input placeholder="Username" />
           </Form.Item>
-
           <Form.Item
             name="password"
             rules={[
@@ -108,7 +119,6 @@ const LoginModal = () => {
             ]}>
             <Input.Password placeholder="Password" />
           </Form.Item>
-
           <Form.Item>
             <Button
               type="primary"
@@ -118,8 +128,23 @@ const LoginModal = () => {
               Log In
             </Button>
           </Form.Item>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "100%",
+            }}>
+            Without Account yet?{" "}
+            <a href="#" onClick={handleRegisterClick}>
+              <span style={{ paddingLeft: "1rem", fontWeight: "bold" }}>
+                Register here{" "}
+              </span>
+            </a>
+          </div>
         </Form>
       </Modal>
+      {registerModalVisible && <RegistrationPage />}
     </div>
   );
 };
