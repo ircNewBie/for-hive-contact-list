@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "tests": "mocha tests/*  --recursive --timeout 10000",
+        "tests": "mocha tests/*  --recursive --timeout 10000",
+    "utests": "mocha tests/unit/*  --recursive --timeout 10000",
+    "itests": "mocha tests/integration/*  --recursive --timeout 10000",
     "start": "node app.js",
     "dev": "nodemon app.js",
     "seed": "node ./src/db/seeder.js"
