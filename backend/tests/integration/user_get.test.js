@@ -1,22 +1,19 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const User = require("../../src/model/user.model");
-
 const bcrypt = require("bcrypt");
 const API_SERVER = require("../test.constants");
-
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const expect = chai.expect;
 
-chai.use(chaiHttp);
-describe("Integration test for GET users", async () => {
+let userData;
+
+const setupUsers = async () => {
   const saltlevel = 10;
   const salt = await bcrypt.genSalt(saltlevel);
   const defaultPassword = "123456";
-
   const encryptedPassword = await bcrypt.hash(defaultPassword, salt);
-
   const userData = [
     {
       email: "testuser1@admin.com",
@@ -35,12 +32,13 @@ describe("Integration test for GET users", async () => {
       role: "ROOT",
     },
   ];
+  return userData;
+};
 
-  const validUserCreds = {
-    email: userData[1].email,
-    password: userData[1].password,
-  };
-
+chai.use(chaiHttp);
+describe("Integration tests for GETting users", () => {
+  let validUserCreds;
+  let jwToken = "test";
   before(async () => {
     // connect to database
     const MONGO_CONN_STRING = process.env.MONGODB_URI + process.env.MONGODB_DB;
@@ -48,39 +46,53 @@ describe("Integration test for GET users", async () => {
       useNewUrlParser: true,
     });
     await Promise.allSettled([User.deleteMany({})]);
+    
+    userData = await setupUsers();
     await User.insertMany(userData);
+
+    validUserCreds = {
+      email: userData[1].email,
+      password: "123456", // Plaintext password for testing
+    };
+
+    // login User
+    const loginURI = "/api/user/login";
+    const res = await chai
+    .request(API_SERVER)
+    .post(loginURI)
+    .send(validUserCreds); // Use async/await to ensure the response is awaited
+    expect(res).to.have.status(200); // Ensure the login was successful
+    jwToken = res.body.accessToken; // Assuming the token is in res.body.accessToken
+    
   });
 
   after(async () => {
-    // await Promise.allSettled([User.deleteMany({})]);
     mongoose.disconnect();
   });
 
-  describe("GET /api/user/all", () => {
+  describe("Get all users URL: `GET /api/user/all`", () => {
+ 
     const getAllURI = "/api/user/all";
-
-    it("GET'/api/user/all' Should be a valid uri. ", (done) => {
+    it("Should return unauthorized without using a token.", (done) => {
       chai
         .request(API_SERVER)
         .get(getAllURI)
-        .send(validUserCreds)
         .end((err, res) => {
-          expect(res).to.not.have.status(404);
-          done();
-        });
+        expect(res).to.have.status(401); // Expect unauthorized
+        done();
+      });
     });
 
-    it(" Should return an unauthorized using an invalid user credentials. ", (done) => {
-      validUserCreds.email = "XXXXXXXXXXXXXXXXX";
-
+    
+    it("Should be able to get users using a valid JWT token.", (done) => {
       chai
         .request(API_SERVER)
         .get(getAllURI)
-        .send(validUserCreds)
+        .set("Authorization", `Bearer ${jwToken}`)
         .end((err, res) => {
-          expect(res).to.have.status(401);
-          done();
-        });
-    });
+          expect(res).to.have.status(200);  
+        done();
+      });
+  });
   });
 });

@@ -12,8 +12,8 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 describe("Integration test for user login", () => {
   const userData = {
-    email: "testuser@admin.com",
-    password: "admin",
+    email: "root@admin.com",
+    password: "123456",
     fullName: "Root Admin",
     contactNumber: "099999999",
     completeAddress: "test address",
@@ -44,9 +44,9 @@ describe("Integration test for user login", () => {
     mongoose.disconnect();
   });
 
-  describe("GET /api/user/test", () => {
+  describe("User URL Endpoint test URL:  `GET /api/user/test`", () => {
     const routerURI = "/api/user/test";
-    it("should return a success status", (done) => {
+    it("should return a success status 200", (done) => {
       chai
         .request(API_SERVER) // Replace with your server URL
         .get(routerURI)
@@ -59,7 +59,7 @@ describe("Integration test for user login", () => {
     });
   });
 
-  describe("POST /api/user/login", () => {
+  describe("User Login URL: POST /api/user/login", () => {
     const loginURI = "/api/user/login";
     const loginPayload = {
       email: userData.email,
@@ -93,14 +93,12 @@ describe("Integration test for user login", () => {
         });
     });
 
-    it("User should be able to login using correct credentials", (done) => {
+    it("User login should succeed with correct credentials", (done) => {
       const loginURI = "/api/user/login";
-      const loginPayload = validUserCreds;
-
       chai
         .request(API_SERVER)
         .post(loginURI)
-        .send(loginPayload)
+        .send(validUserCreds)
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("accessToken");
